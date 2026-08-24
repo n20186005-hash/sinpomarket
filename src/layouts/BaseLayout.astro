@@ -1,0 +1,65 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  noindex?: boolean;
+}
+const { title, description, image = '/images/sinpo-night.webp', noindex = false } = Astro.props;
+const site = Astro.site;
+const pathname = Astro.url.pathname;
+const canonical = site ? new URL(pathname, site).toString() : pathname;
+const absoluteImage = site ? new URL(image, site).toString() : undefined;
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#171b32" />
+    {noindex && <meta name="robots" content="noindex,nofollow" />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {site && <meta property="og:url" content={canonical} />}
+    {absoluteImage && <meta property="og:image" content={absoluteImage} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <title>{title}</title>
+    <script is:inline>
+      (() => {
+        try {
+          const raw = localStorage.getItem('sinpo-cookie-preferences');
+          const prefs = raw ? JSON.parse(raw) : null;
+          if (!prefs?.analytics) return;
+          const script = document.createElement('script');
+          script.async = true;
+          script.src = 'https://www.googletagmanager.com/gtag/js?id=G-HXM22WWPKP';
+          document.head.appendChild(script);
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = function(){window.dataLayer.push(arguments);};
+          window.gtag('js', new Date());
+          window.gtag('config', 'G-HXM22WWPKP', { anonymize_ip: true });
+        } catch (_) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">본문 바로가기</a>
+    <Header />
+    <main id="main"><slot /></main>
+    <Footer />
+  </body>
+</html>

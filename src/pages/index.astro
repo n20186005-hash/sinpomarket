@@ -1,0 +1,153 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const site = Astro.site;
+const attractionUrl = site ? new URL('/', site).toString() : undefined;
+const faqs = [
+  ['입장료가 있나요?', '시장 자체 입장료는 없습니다. 음식·상품 구매, 일부 체험, 주차는 각각 별도 비용이 발생할 수 있습니다.'],
+  ['몇 시에 방문하는 것이 좋나요?', '공식 관광안내상 시장 이용시간은 대체로 10:00~21:00이지만 점포별 차이가 있습니다. 여러 점포가 문을 연 낮부터 저녁 초입이 둘러보기 편합니다.'],
+  ['정기 휴무일이 있나요?', '인천투어 안내에는 매월 첫째 월요일과 설·추석 당일 휴무가 표시되어 있으나 점포별로 다를 수 있습니다. 중요한 방문이라면 출발 전에 운영 여부를 확인하세요.'],
+  ['휠체어로 방문할 수 있나요?', '주출입구 경사로, 휠체어 통과 가능한 출입구, 장애인 화장실과 장애인 전용 주차면이 안내되어 있습니다. 현장 공사나 혼잡 상황은 달라질 수 있습니다.'],
+  ['유아와 함께 가기 괜찮나요?', '지원센터 내 수유실이 안내되어 있습니다. 시장 통로는 시간대에 따라 혼잡할 수 있으므로 유모차 이용 시 비교적 한산한 시간대를 권합니다.'],
+  ['반려동물 동반이 가능한가요?', '공식 안내상 목줄을 착용하고 배설물 처리용품을 준비한 경우 동반이 가능합니다. 식품 취급 점포별 출입 기준은 현장에서 확인하세요.'],
+  ['주차할 수 있나요?', '시장 인근 유료 공영주차장을 이용할 수 있습니다. 주말과 식사 시간대에는 혼잡할 수 있어 대중교통 이용도 고려할 만합니다.'],
+  ['신포역에서 얼마나 걸리나요?', '한국관광공사 시장 안내 기준으로 수인분당선 신포역 4번 출구에서 도보 약 3분으로 소개됩니다. 출구 공사나 보행 동선 변경 가능성이 있어 당일 지도를 확인하세요.'],
+];
+const structuredData = {
+  '@context':'https://schema.org',
+  '@type':['TouristAttraction','LocalBusiness'],
+  '@id': attractionUrl ? `${attractionUrl}#place` : '#place',
+  name:'신포국제시장',
+  alternateName:'Sinpo International Market',
+  description:'인천 개항의 역사와 지역 생활문화가 겹쳐 있는 전통시장. 음식, 식재료, 생활품과 개항장 원도심 문화를 함께 살펴볼 수 있다.',
+  ...(attractionUrl ? {url:attractionUrl} : {}),
+  image: site ? [new URL('/images/sinpo-night.webp',site).toString(),new URL('/images/sinpo-arcade.webp',site).toString(),new URL('/images/dakgangjeong.webp',site).toString()] : undefined,
+  telephone:'+82-32-764-0415',
+  address:{'@type':'PostalAddress',streetAddress:'우현로49번길 11-5',addressLocality:'제물포구',addressRegion:'인천광역시',addressCountry:'KR'},
+  geo:{'@type':'GeoCoordinates',latitude:37.47135,longitude:126.62725},
+  isAccessibleForFree:true,
+  openingHoursSpecification:[{ '@type':'OpeningHoursSpecification', dayOfWeek:['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], opens:'10:00', closes:'21:00' }],
+  aggregateRating:{'@type':'AggregateRating',ratingValue:'4.0',bestRating:'5',reviewCount:'123'},
+};
+const faqData={'@context':'https://schema.org','@type':'FAQPage',mainEntity:faqs.map(([q,a])=>({'@type':'Question',name:q,acceptedAnswer:{'@type':'Answer',text:a}}))};
+---
+<BaseLayout title="신포국제시장 여행정보 가이드 | 인천 제물포구" description="인천 신포국제시장의 역사, 먹거리 유형, 영업·휴무, 주차, 화장실, 무장애 편의, 공항·지하철·버스·택시 교통, 주변 명소를 비영리 관점에서 정리한 독립 여행정보 가이드입니다.">
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(faqData)}></script>
+
+  <section class="hero">
+    <div class="hero-media"><img src="/images/sinpo-night.webp" alt="밤에 불이 켜진 신포국제시장 아케이드 입구" width="2000" height="1500" fetchpriority="high" /></div>
+    <div class="shell hero-content">
+      <span class="hero-badge">인천 개항장 원도심 · 전통시장</span>
+      <p class="eyebrow">독립 비영리 여행정보 가이드</p>
+      <h1>항구의 시간이<br/><em>시장 골목</em>에 남다</h1>
+      <p class="hero-lead">19세기 말 개항기의 채소 장터에서 출발해 지역의 식탁과 생활을 지켜 온 신포국제시장. 유명 메뉴만 빠르게 소비하기보다, 인천의 개항과 이주·교역의 흔적을 골목의 구조와 음식문화 속에서 읽어보세요.</p>
+      <div class="hero-actions"><a class="button primary" href="#story">시장 이야기부터 보기</a><a class="button secondary" href="#transport">가는 방법 확인</a></div>
+    </div>
+  </section>
+
+  <div class="fact-strip"><div class="shell fact-grid">
+    <div class="fact"><b>현재 주소</b><span>인천광역시 제물포구 우현로49번길 11-5</span></div>
+    <div class="fact"><b>일반 안내 시간</b><span>10:00–21:00 · 점포별 상이</span></div>
+    <div class="fact"><b>시장 입장</b><span>무료 · 구매·주차 등 개별 결제</span></div>
+    <div class="fact"><b>대중교통</b><span>수인분당선 신포역 도보권</span></div>
+  </div></div>
+
+  <section class="section alt" id="story"><div class="shell">
+    <div class="section-head"><div><span class="kicker">시장 이야기</span><h2>개항이 만든<br/>‘새로운 포구’의 장터</h2></div><p>신포시장의 뿌리는 1883년 인천항 개항 이후 형성된 국제도시의 생활권과 맞닿아 있습니다. 여러 국적의 거주자와 상인이 오가면서 식재료와 수입품이 거래되었고, 그 과정이 오늘날 전통시장 문화의 한 축으로 이어졌습니다.</p></div>
+    <div class="story-grid">
+      <div class="story-card"><h3>관광지가 되기 전에, 생활의 시장이었다</h3><p>공식 관광자료에 따르면 19세기 말 이 일대에서는 일본인·중국인·서양인 거주자를 대상으로 채소를 파는 장터가 형성되었습니다. 특히 중국 산둥 지역에서 들어온 채소와 새로운 식재료가 유통되며 개항장 식생활에 변화를 주었다고 전해집니다.</p><p>이후 소규모 점포가 늘어났고 1970년 정식 시장으로 등록되었습니다. 1970년대에는 외국 물품을 구하기 쉬운 곳으로도 알려졌으며, 2010년에는 ‘신포국제시장’이라는 이름을 사용하기 시작했습니다.</p><div class="neutral-note"><strong>역사 읽기 팁</strong><br/>‘국제시장’이라는 이름은 단순히 관광객을 위한 수식어가 아니라 개항기부터 이어진 교역·이주·생활문화의 기억과 연결해 이해하면 더 풍부합니다. 1970년대에는 물건이 풍부한 상권을 두고 “신포동에 없으면 없는 것”이라는 말이 회자됐다고 관광자료는 전합니다. 확인 가능한 기록을 중심으로 소개하며 출처가 불분명한 전설은 덧붙이지 않습니다.</div></div>
+      <div class="timeline">
+        <div class="timeline-item"><b>19세기 말</b><h3>개항장 채소 장터의 형성</h3><p>외국인 거주자와 상인을 대상으로 새로운 채소와 식재료가 유통되던 시장의 초기 형태.</p></div>
+        <div class="timeline-item"><b>1970년</b><h3>정식 시장 등록</h3><p>소규모 점포가 모인 생활 상권이 제도권 시장으로 자리 잡음.</p></div>
+        <div class="timeline-item"><b>1970년대 이후</b><h3>외래 상품과 원도심 상권</h3><p>인천항과 가까운 입지를 바탕으로 외국 물품과 다양한 먹거리가 모이는 장소로 성장.</p></div>
+        <div class="timeline-item"><b>2010년 이후</b><h3>신포국제시장이라는 이름</h3><p>전통시장 기능에 개항장 역사와 국제도시의 기억을 더해 현재의 관광·생활 공간으로 이어짐.</p></div>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="section"><div class="shell">
+    <div class="section-head"><div><span class="kicker">현장 풍경</span><h2>아케이드 아래에서<br/>읽는 시장의 표정</h2></div><p>낮에는 식재료와 생활품을 찾는 지역 생활의 리듬이, 저녁에는 간판과 먹거리 골목의 활기가 두드러집니다. 사진은 현장 이해를 위한 기록이며 특정 점포를 홍보하지 않습니다. 음식 사진은 신포시장의 대표 음식 유형을 설명하기 위한 일반 닭강정 예시입니다.</p></div>
+    <div class="photo-grid">
+      <figure><img src="/images/sinpo-arcade.webp" loading="lazy" alt="신포국제시장 아케이드와 시장을 오가는 방문객" width="1600" height="1600"/><figcaption class="photo-credit">사진: <a href="https://commons.wikimedia.org/wiki/File:Sinpo-market.jpg" rel="noreferrer">Mming na · 위키미디어 공용</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noreferrer">CC BY-SA 4.0</a></figcaption></figure>
+      <figure><img src="/images/sinpo-station.webp" loading="lazy" alt="수인분당선 신포역 역명판" width="1050" height="1400"/><figcaption class="photo-credit">사진: <a href="https://commons.wikimedia.org/wiki/File:Sinpo_station_name_plate.jpg" rel="noreferrer">Vitzro2011 · 위키미디어 공용</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="noreferrer">CC BY-SA 3.0</a></figcaption></figure>
+      <figure><img src="/images/dakgangjeong.webp" loading="lazy" alt="한국 전통시장 먹거리 유형인 닭강정" width="960" height="640"/><figcaption class="photo-credit">사진: <a href="https://commons.wikimedia.org/wiki/File:Dak-gangjeong_2.jpg" rel="noreferrer">Dr 방원장 · 위키미디어 공용</a> · <a href="https://creativecommons.org/licenses/by/4.0/" rel="noreferrer">CC BY 4.0</a></figcaption></figure>
+    </div>
+    <p class="rating-note">대표 배경 사진: <a href="https://commons.wikimedia.org/wiki/File:Sinpo-market_191123001.jpg" rel="noreferrer">Jjw · 위키미디어 공용</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noreferrer">CC BY-SA 4.0</a>. 모든 사진은 외부 핫링크 없이 로컬 파일로 제공됩니다.</p>
+  </div></section>
+
+  <section class="section alt" id="food"><div class="shell">
+    <div class="section-head"><div><span class="kicker">먹거리 이해</span><h2>가게 이름보다<br/>음식의 맥락을 먼저</h2></div><p>특정 상점을 추천하지 않고 신포시장과 인천 원도심에서 자주 만나는 음식 유형을 소개합니다. 대기시간, 가격, 조리법, 알레르기 정보는 점포마다 다르므로 현장 표기를 확인하세요.</p></div>
+    <div class="food-grid">
+      <article class="food-card"><div class="icon">🍗</div><h3>닭강정</h3><p>튀긴 닭에 달고 매콤한 양념을 입힌 시장 대표 간식 유형. 포장 수요가 많아 혼잡 시간에는 대기가 생길 수 있습니다.</p></article>
+      <article class="food-card"><div class="icon">🥢</div><h3>쫄면</h3><p>쫄깃한 면과 매콤새콤한 양념을 섞어 먹는 인천 지역의 상징적인 분식 문화와 연결되는 메뉴.</p></article>
+      <article class="food-card"><div class="icon">🥟</div><h3>만두·분식</h3><p>만두, 떡볶이, 면류처럼 짧은 동선에서 맛보기 좋은 전통시장형 간식과 한 끼 음식.</p></article>
+      <article class="food-card"><div class="icon">🥖</div><h3>공갈빵·제과</h3><p>개항장 중국 음식문화와 연결해 설명되는 바삭한 중화식 제과류. 역사 맥락과 함께 살펴볼 만합니다.</p></article>
+    </div>
+    <div class="neutral-note"><strong>중립적 선택 기준</strong> · 위생 상태와 가격표가 명확한지, 알레르기·매운맛 정보를 확인할 수 있는지, 일회용품을 줄일 수 있는지 등을 기준으로 직접 비교하세요. 특정 상호나 인기 순위를 제공하지 않습니다.</div>
+  </div></section>
+
+  <section class="section" id="visit"><div class="shell">
+    <div class="section-head"><div><span class="kicker">방문 정보</span><h2>가기 전에<br/>알아둘 것</h2></div><p>시장 운영은 점포마다 다르고 행사·공사·명절에 따라 바뀔 수 있습니다. 아래 정보는 인천투어와 한국관광공사 공개 안내를 중심으로 정리했으며, 중요한 일정은 출발 전에 공식 채널로 다시 확인하세요.</p></div>
+    <div class="visit-grid">
+      <article class="info-card accent"><h3>운영시간·휴무</h3><p><strong>일반 안내 10:00–21:00</strong><br/>점포별 운영시간은 다릅니다. 공식 안내에는 매월 첫째 월요일, 설·추석 당일 휴무가 표시되어 있으나 개별 점포는 다를 수 있습니다.</p></article>
+      <article class="info-card"><h3>입장료·비용</h3><p>시장 입장료는 없습니다. 식음료·상품 구매, 일부 체험, 유료 주차 등은 개별 결제입니다. 가격은 현장 표기를 우선하세요.</p></article>
+      <article class="info-card"><h3>권장 시간·체류</h3><p>여러 점포가 운영하는 <strong>낮~저녁 초입</strong>이 둘러보기 편합니다. 시장만 1.5~2.5시간, 개항장 주변까지 함께 보면 반나절 정도를 잡는 방식이 무난합니다.</p></article>
+      <article class="info-card"><h3>화장실·수유실</h3><p>시장 건물 내부에 남녀 구분 화장실이 안내되어 있으며, 지원센터에는 수유실이 있습니다. 장애인 화장실 관련 정보도 공식 무장애 관광자료에서 확인됩니다.</p></article>
+      <article class="info-card"><h3>무장애·이동</h3><p>주출입구 경사로, 휠체어 통과 가능한 출입구, 장애인 주차면과 안내데스크가 안내되어 있습니다. 아케이드 혼잡도는 시간대별로 차이가 있습니다.</p></article>
+      <article class="info-card"><h3>반려동물</h3><p>공식 안내상 목줄과 배설물 처리용품을 갖춘 경우 동반 가능합니다. 식품 취급 공간이나 개별 점포 출입 기준은 현장에서 확인하세요.</p></article>
+      <article class="info-card"><h3>주차</h3><p>시장 인근 유료 공영주차장 이용이 가능합니다. 장애인 전용 주차면도 안내되어 있습니다. 주말·식사 시간에는 만차 가능성을 고려하세요.</p></article>
+      <article class="info-card"><h3>숙박</h3><p>신포·동인천·인천역 원도심에는 호텔, 게스트하우스 등 다양한 숙박 유형이 있습니다. 특정 업체 대신 대중교통 접근성, 야간 귀가 동선, 취소 규정을 비교하세요.</p></article>
+      <article class="info-card"><h3>장보기·생활편의</h3><p>시장 자체에서 식재료·반찬·생활품을 구할 수 있고 주변 원도심에는 편의점·중소형 슈퍼마켓 유형의 생활시설이 있습니다. 필요 품목과 영업시간을 지도에서 확인하세요.</p></article>
+      <article class="info-card"><h3>주유·전기차 충전</h3><p>시장 내부 전용 주유·충전시설은 확인되지 않습니다. 차량 방문 시 인근 공공·민간 충전소 또는 주유시설을 지도 서비스에서 거리·운영 상태 기준으로 검색하세요.</p></article>
+      <article class="info-card"><h3>외국어 안내</h3><p>인천투어에는 영어·중국어·일본어 리플릿 비치가 안내되어 있습니다. 제공 여부는 현장 재고나 운영 상황에 따라 달라질 수 있습니다.</p></article>
+      <article class="info-card"><h3>현금·카드</h3><p>결제수단은 점포마다 다를 수 있습니다. 소액 현금과 카드·모바일 결제를 함께 준비하고, 결제 전 가능 수단을 확인하면 편리합니다.</p></article>
+    </div>
+  </div></section>
+
+  <section class="section dark" id="transport"><div class="shell">
+    <div class="section-head"><div><span class="kicker">상세 교통</span><h2>공항에서,<br/>도심에서, 시장까지</h2></div><p>노선 개편과 공사로 번호·시간표가 바뀔 수 있어 변동성이 큰 버스 번호는 고정해 적지 않았습니다. 아래는 환승 원칙과 도착 지점을 중심으로 한 계획용 안내입니다.</p></div>
+    <div class="transport-layout">
+      <div class="route-list">
+        <article class="route"><div class="route-icon">🚇</div><div><h3>지하철</h3><p><strong>수인분당선 신포역 4번 출구</strong>에서 시장까지 공식 관광안내 기준 도보 약 3분. 수도권 1호선 인천역에서도 도보 접근이 가능합니다.</p></div></article>
+        <article class="route"><div class="route-icon">✈️</div><div><h3>인천국제공항</h3><p>공항철도 → 계양역에서 인천1호선 → 원인재역에서 수인분당선으로 갈아타고 신포역에서 하차하는 철도 중심 경로가 있습니다. 짐이 많다면 택시와 소요비용을 비교하세요.</p></div></article>
+        <article class="route"><div class="route-icon">🚌</div><div><h3>시내·공항버스</h3><p>신포시장·신포동·동인천권 정류장을 목적지로 검색해 현재 운행 중인 노선을 확인하세요. 공항버스는 인천 원도심권 하차 후 시내버스 또는 택시 환승 방식도 가능합니다.</p></div></article>
+        <article class="route"><div class="route-icon">🚕</div><div><h3>택시</h3><p>기사에게 <strong>“신포국제시장, 우현로49번길 11-5”</strong>를 제시하면 목적지 확인이 쉽습니다. 시장 안쪽은 보행 중심이므로 입구 부근에서 하차 후 이동합니다.</p></div></article>
+      </div>
+      <aside class="transport-note"><h3>공항 출발 체크 순서</h3><ol><li><strong>짐의 크기와 동행자 이동성</strong>을 먼저 확인하세요. 환승이 불편하면 택시가 단순합니다.</li><li><strong>철도 운행 종료시간</strong>과 막차를 공식 교통정보에서 확인합니다.</li><li>버스는 <strong>당일 운행 노선·정류장</strong>을 확인한 뒤 탑승하세요. 노선 번호는 개편 가능성이 큽니다.</li><li>시장 방문 뒤 차이나타운·개항장 거리까지 걸을 계획이라면 <strong>편한 신발</strong>이 유용합니다.</li></ol><p>예상 시간·요금은 교통 상황과 출발 터미널에 따라 달라질 수 있어 고정값으로 제시하지 않습니다.</p></aside>
+    </div>
+  </div></section>
+
+  <section class="section" id="map"><div class="shell map-wrap">
+    <div class="map-copy"><span class="eyebrow">현지 언어 지도</span><h2>신포국제시장 위치</h2><p>지도 임베드의 언어·지역 설정은 한국어·대한민국 기준으로 조정했습니다. 지도에 표시되는 영업정보와 리뷰는 Google의 외부 데이터이며 본 사이트가 관리하지 않습니다.</p><div class="tag-row"><span class="tag">제물포구</span><span class="tag">신포역</span><span class="tag">개항장 원도심</span></div></div>
+    <iframe class="map-frame" src="https://www.google.com/maps/embed?pb=!1m5!3m3!1m2!1s0x357b78927b11ef99%3A0xdab66f7915077fe9!2sSinpo%20International%20Market%2C%20Incheon!5e1!3m2!1sko!2skr!4v1787535312099!5m2!1sko!2skr" width="600" height="450" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="신포국제시장 Google 지도"></iframe>
+  </div></section>
+
+  <section class="section alt" id="nearby"><div class="shell">
+    <div class="section-head"><div><span class="kicker">주변 명소</span><h2>시장을 넘어<br/>개항장 한 바퀴</h2></div><p>신포시장은 개항장 역사공간과 걸어서 연계하기 좋은 위치입니다. 식사만 하고 돌아가기보다 도시가 항구를 통해 변화한 흔적을 함께 살펴보면 방문의 맥락이 선명해집니다.</p></div>
+    <div class="nearby-grid">
+      <article class="nearby-card"><span class="distance">도보 연계권</span><h3>개항장 거리</h3><p>근대 건축과 개항 이후 도시 구조를 살펴보기 좋은 역사문화 거리. 시장의 국제적 배경을 이해하는 데 도움이 됩니다.</p></article>
+      <article class="nearby-card"><span class="distance">도보 연계권</span><h3>자유공원</h3><p>인천항과 원도심의 지형을 높은 곳에서 조망할 수 있어 시장 방문 전후 도시의 공간감을 이해하기 좋습니다.</p></article>
+      <article class="nearby-card"><span class="distance">도보 연계권</span><h3>홍예문</h3><p>개항기 도시 확장과 연결되는 석조 아치 구조물. 주변 경사와 오래된 골목을 함께 관찰할 수 있습니다.</p></article>
+      <article class="nearby-card"><span class="distance">인천역 방향</span><h3>차이나타운</h3><p>화교 사회와 음식문화, 인천 개항장의 이주사를 함께 살펴볼 수 있는 대표적인 역사문화 구역입니다.</p></article>
+      <article class="nearby-card"><span class="distance">개항장 권역</span><h3>인천아트플랫폼 일대</h3><p>근대 창고·상업건축을 문화공간으로 재활용한 구역으로, 원도심 보존과 재생의 흐름을 보기 좋습니다.</p></article>
+      <article class="nearby-card"><span class="distance">도보 연계권</span><h3>답동성당 일대</h3><p>인천 원도심의 종교·건축사와 생활권 변화를 함께 읽을 수 있는 역사 경관 구역입니다.</p></article>
+    </div>
+    <div class="verification"><div><strong>추천 동선 1</strong><span>신포시장 → 개항장 거리 → 자유공원</span></div><div><strong>추천 동선 2</strong><span>신포시장 → 홍예문 → 답동 일대</span></div><div><strong>비 오는 날</strong><span>시장 아케이드 + 실내 문화공간 중심</span></div><div><strong>보행 주의</strong><span>원도심 일부 구간은 경사가 있음</span></div></div>
+  </div></section>
+
+  <section class="section" id="faq"><div class="shell">
+    <div class="section-head"><div><span class="kicker">자주 묻는 질문</span><h2>방문 전<br/>마지막 확인</h2></div><p>시장 정보는 현장 상황에 따라 바뀔 수 있습니다. 특히 점포별 영업시간, 명절 휴무, 주차 혼잡, 대중교통 노선은 출발 당일 다시 확인하는 것이 안전합니다.</p></div>
+    <div class="faq-grid">{faqs.map(([q,a]) => <details><summary>{q}</summary><p>{a}</p></details>)}</div>
+  </div></section>
+
+  <section class="section alt" id="sources"><div class="shell">
+    <div class="section-head"><div><span class="kicker">자료 검증</span><h2>무엇을<br/>근거로 썼나요?</h2></div><p>상업 블로그 순위가 아니라 공공 관광기관·지자체 공개 자료를 우선했습니다. 서로 다른 공식 페이지의 값이 다르면 단정하지 않고 ‘점포별 상이’처럼 변동성을 그대로 표시했습니다.</p></div>
+    <div class="source-box"><ul>
+      <li><a href="https://itour.incheon.go.kr/ssst/ssst/detail.do?cotId=ITD21122715161333869" rel="noreferrer">인천투어 · 신포국제시장</a> — 주소, 운영시간, 휴무, 편의시설, 화장실, 주차, 반려동물, 외국어 안내</li>
+      <li><a href="https://access.visitkorea.or.kr/ms/detail.do?cotId=0c4c9c0b-f0e9-47a3-9c6d-561e42d75a78" rel="noreferrer">한국관광공사 열린관광 · 신포국제시장</a> — 무장애 주차·경사로·장애인 화장실·영유아 편의</li>
+      <li><a href="https://www.incheon.go.kr/IC01070101" rel="noreferrer">인천광역시 · 행정체제 개편 안내</a> — 2026년 행정구역 개편과 제물포구 표기 근거</li>
+      <li><a href="https://www.jemulpo.go.kr/" rel="noreferrer">인천광역시 제물포구청</a> — 현재 관할 행정구역과 전통시장 지원 행정정보 교차확인</li>
+      <li><a href="https://english.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=174438" rel="noreferrer">한국관광공사 대한민국 구석구석/VisitKorea 자료</a> — 개항기 시장 역사와 기본 관광정보 교차확인</li>
+    </ul><p class="rating-note">구조화 데이터의 공개 평점(4.0/5, 후기 123건)은 지도 서비스의 공개 표시값을 반영한 것으로 언제든 변동될 수 있으며, 본 사이트의 평가나 추천을 의미하지 않습니다.</p></div>
+  </div></section>
+</BaseLayout>

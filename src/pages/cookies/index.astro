@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+<BaseLayout title="쿠키 설정 | 신포국제시장 여행정보 가이드" description="신포국제시장 여행정보 가이드의 쿠키와 분석 설정을 관리합니다.">
+<section class="legal-hero"><div class="shell"><span class="kicker">정책</span><h1>쿠키 설정</h1><p>최종 업데이트: 2026년 8월 · 분석 기능은 기본 비활성화입니다. 이 페이지에서 언제든 선호 설정을 바꿀 수 있습니다.</p></div></section>
+<section class="legal-content"><div class="shell"><article>
+<div class="policy-box"><strong>동의 방식</strong><p>필수 기능을 제외한 분석 항목은 이용자가 직접 허용한 경우에만 활성화됩니다. ‘모두 거부’를 선택해도 핵심 관광정보 열람에는 지장이 없습니다.</p></div>
+<div id="cookie-form" aria-labelledby="cookie-title">
+  <h2 id="cookie-title">카테고리별 설정</h2>
+  <div class="cookie-control"><div><h3>필수 저장정보</h3><p>사이트 기본 동작과 쿠키 동의 상태 저장에 필요합니다. 비활성화할 수 없습니다.</p></div><input class="switch" type="checkbox" checked disabled aria-label="필수 저장정보 항상 활성" /></div>
+  <div class="cookie-control"><div><h3>분석 쿠키</h3><p>Google Analytics를 통해 방문 페이지와 이용 흐름의 집계 정보를 파악하는 데 사용합니다. 선택 동의 전에는 스크립트를 로드하지 않습니다.</p></div><input class="switch" id="analytics" type="checkbox" aria-label="분석 쿠키 허용" /></div>
+  <div class="cookie-control"><div><h3>선호 설정</h3><p>이용자가 선택한 표시 설정이나 쿠키 선호를 브라우저 저장소에 기억하기 위한 항목입니다.</p></div><input class="switch" id="preferences" type="checkbox" aria-label="선호 설정 저장 허용" /></div>
+  <div class="cookie-control"><div><h3>마케팅 쿠키</h3><p>본 비영리 사이트는 개인 맞춤 광고나 광고 성과 측정을 운영하지 않으므로 마케팅 쿠키를 사용하지 않습니다.</p></div><input class="switch" type="checkbox" disabled aria-label="마케팅 쿠키 사용 안 함" /></div>
+  <div class="cookie-actions"><button class="button primary" id="save-cookies" type="button">선택 저장</button><button class="button" id="reject-cookies" type="button">모두 거부</button></div>
+  <p class="status-message" id="cookie-status" role="status" aria-live="polite"></p>
+</div>
+<h2>브라우저에서 직접 관리하기</h2><p>브라우저 설정에서 쿠키와 로컬 저장소를 삭제하거나 차단할 수 있습니다. 저장정보를 삭제하면 이 페이지의 선택도 초기화될 수 있습니다.</p>
+<h2>외부 서비스</h2><p>Google 지도는 위치 안내를 위한 임베드 기능으로, 지도 프레임을 불러오는 과정에서 Google과 통신합니다. 분석 기능은 별도의 선택 동의가 있는 경우에만 Google Analytics를 로드합니다.</p>
+<a class="legal-back" href="/">← 신포국제시장 가이드로 돌아가기</a>
+</article></div></section>
+<script is:inline>
+  (() => {
+    const analytics = document.getElementById('analytics');
+    const preferences = document.getElementById('preferences');
+    const status = document.getElementById('cookie-status');
+    const read = () => { try { return JSON.parse(localStorage.getItem('sinpo-cookie-preferences') || '{}'); } catch { return {}; } };
+    const current = read();
+    analytics.checked = Boolean(current.analytics);
+    preferences.checked = Boolean(current.preferences);
+    document.getElementById('save-cookies').addEventListener('click', () => {
+      localStorage.setItem('sinpo-cookie-preferences', JSON.stringify({analytics:analytics.checked,preferences:preferences.checked,marketing:false,updated:'2026-08'}));
+      status.textContent = '선호 설정을 저장했습니다. 분석 설정 변경은 다음 페이지 이동부터 적용됩니다.';
+    });
+    document.getElementById('reject-cookies').addEventListener('click', () => {
+      analytics.checked = false; preferences.checked = false;
+      localStorage.setItem('sinpo-cookie-preferences', JSON.stringify({analytics:false,preferences:false,marketing:false,updated:'2026-08'}));
+      status.textContent = '선택 항목을 모두 거부했습니다.';
+    });
+  })();
+</script>
+</BaseLayout>

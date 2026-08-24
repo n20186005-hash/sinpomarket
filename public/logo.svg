@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 96" role="img" aria-labelledby="t d">
+<title id="t">신포국제시장 여행가이드 로고</title><desc id="d">시장 아치와 인천 항구의 물결을 결합한 상징</desc>
+<rect width="360" height="96" rx="22" fill="#171b32"/>
+<g transform="translate(18 15)">
+  <path d="M8 56V33C8 14 22 3 42 3s34 11 34 30v23" fill="none" stroke="#ffb321" stroke-width="8" stroke-linecap="round"/>
+  <path d="M17 35h50" stroke="#f1513f" stroke-width="7" stroke-linecap="round"/>
+  <path d="M12 57c10-8 20-8 30 0s20 8 30 0" fill="none" stroke="#61d6c8" stroke-width="6" stroke-linecap="round"/>
+</g>
+<text x="112" y="43" fill="#fff7e8" font-family="Arial, sans-serif" font-size="24" font-weight="800">신포국제시장</text>
+<text x="112" y="70" fill="#ffcf70" font-family="Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="2">여행정보 가이드</text>
+</svg>
