@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withSiteName } from '../../data/site';
 ---
-<BaseLayout title="서비스 이용약관 | 신포국제시장 여행정보 가이드" description="신포국제시장 여행정보 가이드의 서비스 이용약관입니다.">
+<BaseLayout title={withSiteName('서비스 이용약관')} description="신포국제시장 여행 가이드의 서비스 이용약관입니다.">
 <section class="legal-hero"><div class="shell"><span class="kicker">정책</span><h1>서비스 이용약관</h1><p>최종 업데이트: 2026년 8월 · 본 사이트를 이용함으로써 아래 조건에 동의하는 것으로 봅니다.</p></div></section>
 <section class="legal-content"><div class="shell"><article>
 <h2>1. 사이트의 성격</h2><p>본 웹사이트는 독립적인 비영리 여행정보 안내 프로젝트입니다. 신포국제시장 운영주체, 인천광역시, 제물포구, 인천관광공사, 한국관광공사, 기타 정부기관·상업 운영자와 공식적인 소속·제휴 관계가 없습니다.</p>

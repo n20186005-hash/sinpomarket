@@ -9,7 +9,7 @@
 - `@astrojs/check@0.9.10`의 TypeScript peer 범위 `^5.0.0 || ^6.0.0` 안에서 TypeScript `6.0.3` 사용
 - `pnpm-workspace.yaml` 없음
 - `example.com`, `localhost`, `chrome-extension://`, `lastmod` 없음
-- 사이트 URL 설정은 `astro.config.mjs`의 `SITE_URL` 한 곳뿐이며, 값이 비어 있을 때 sitemap 통합은 비활성화
+- 사이트 URL 설정은 `astro.config.mjs`의 `SITE_URL` 한 곳뿐이며, 값이 비어 있을 때 sitemap 통합은 비활성화(현재는 `https://sinpomarket.org`로 설정되어 sitemap이 생성됨)
 - Google 지도 임베드는 한국어/대한민국(`ko/KR`) 설정
 - 개인정보 처리방침·서비스 이용약관·쿠키 설정은 각각 독립 경로
 - GA4는 분석 동의가 저장된 경우에만 로드
@@ -50,4 +50,21 @@ pnpm build
 ! grep -RIE '<lastmod>|lastmod' dist
 ```
 
-`SITE_URL`이 비어 있는 현재 상태에서는 sitemap을 의도적으로 생성하지 않습니다. 실제 HTTPS 도메인을 `astro.config.mjs`의 `SITE_URL`에 입력한 뒤 다시 빌드하면 `@astrojs/sitemap`이 실제 사이트 URL에서 자동 생성합니다.
+`SITE_URL`이 비어 있는 경우에는 sitemap을 의도적으로 생성하지 않습니다. 현재는 `https://sinpomarket.org`가 입력되어 있으므로 빌드 시 sitemap이 실제 사이트 URL로 생성됩니다.
+
+## 로컬 빌드 검증 기록
+
+Node.js 24.19.0 / pnpm 11.22.0(독립 실행형) 환경에서 실제로 실행했습니다.
+
+```bash
+pnpm install --config.node-linker=hoisted --config.engine-strict=false
+node node_modules/astro/bin/astro.mjs build
+```
+
+- 8개 페이지 생성: `/`, `/food/`, `/location/`, `/hours/`, `/nearby/`, `/privacy/`, `/terms/`, `/cookies/`
+- `sitemap-index.xml`과 `sitemap-0.xml` 생성, https 기준 8개 URL 포함
+- 모든 페이지의 canonical·`og:url`이 `https://sinpomarket.org/...`로 출력되고 `og:site_name`이 일치
+- `dist/_headers`에 HSTS, `dist/robots.txt`에 Sitemap 항목 포함
+- `example.com`, `localhost`, `chrome-extension://` 미검출
+
+`astro check`는 이 검증 환경에서 힙 메모리 부족(OOM)으로 종료되어 결과를 남기지 못했습니다. 타입 오류 여부는 편집기의 Astro LSP 진단(0건)으로 확인했습니다.

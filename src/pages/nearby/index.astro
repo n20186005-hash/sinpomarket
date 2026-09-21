@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withSiteName, type Faq } from '../../data/site';
+import { breadcrumb, faqPage } from '../../lib/schema';
+
+const site = Astro.site;
+const crumbs = [
+  { name: '홈', path: '/' },
+  { name: '주변 명소', path: '/nearby/' },
+];
+const faqs: Faq[] = [
+  ['신포국제시장 주변에 무엇이 있나요?', '개항장 거리, 자유공원, 홍예문, 차이나타운, 인천아트플랫폼 일대, 답동성당 일대 등이 도보 연계권으로 소개됩니다. 모두 개항기 도시 형성과 관련된 장소입니다.'],
+  ['시장과 차이나타운을 하루에 함께 볼 수 있나요?', '걸어서 연결할 수 있는 거리입니다. 시장에서 식사한 뒤 개항장 거리와 차이나타운으로 이동하는 반나절 코스가 일반적입니다.'],
+  ['비가 오는 날에도 걸어 다닐 수 있나요?', '시장 아케이드 구간은 비를 피하기 좋습니다. 다만 원도심 일부 구간은 경사와 계단이 있어 우산과 미끄럼에 주의하세요.'],
+  ['아이와 함께 가기 좋은 동선이 있나요?', '경사가 큰 구간을 줄이고 시장 아케이드와 개방형 광장·공원을 중심으로 묶는 방식이 무난합니다. 유모차는 혼잡 시간대를 피하는 편이 편합니다.'],
+  ['주변 명소의 운영시간도 같은가요?', '장소마다 다릅니다. 야외 공간은 상시 개방형인 곳이 많지만 전시·문화시설은 별도의 운영시간과 휴관일이 있으므로 개별 확인이 필요합니다.'],
+];
+const spots = [
+  { distance: '도보 연계권', name: '개항장 거리', text: '근대 건축과 개항 이후 도시 구조를 살펴보기 좋은 역사문화 거리. 시장의 국제적 배경을 이해하는 데 도움이 됩니다.' },
+  { distance: '도보 연계권', name: '자유공원', text: '인천항과 원도심의 지형을 높은 곳에서 조망할 수 있어 시장 방문 전후 도시의 공간감을 이해하기 좋습니다.' },
+  { distance: '도보 연계권', name: '홍예문', text: '개항기 도시 확장과 연결되는 석조 아치 구조물. 주변 경사와 오래된 골목을 함께 관찰할 수 있습니다.' },
+  { distance: '인천역 방향', name: '차이나타운', text: '화교 사회와 음식문화, 인천 개항장의 이주사를 함께 살펴볼 수 있는 대표적인 역사문화 구역입니다.' },
+  { distance: '개항장 권역', name: '인천아트플랫폼 일대', text: '근대 창고·상업건축을 문화공간으로 재활용한 구역으로, 원도심 보존과 재생의 흐름을 보기 좋습니다.' },
+  { distance: '도보 연계권', name: '답동성당 일대', text: '인천 원도심의 종교·건축사와 생활권 변화를 함께 읽을 수 있는 역사 경관 구역입니다.' },
+];
+const courses = [
+  { icon: '🥢', name: '먹거리 중심 코스', text: '신포국제시장 → 개항장 거리 → 차이나타운. 시장에서 간단히 먹고 개항장의 거리 풍경을 지나 이주사 공간으로 이어지는 흐름입니다.' },
+  { icon: '🏛️', name: '역사 산책 코스', text: '신포국제시장 → 홍예문 → 답동 일대. 시장의 생활문화와 개항기 도시 확장의 흔적을 같은 날 비교해 볼 수 있습니다.' },
+  { icon: '🌊', name: '조망·휴식 코스', text: '신포국제시장 → 자유공원 → 인천아트플랫폼 일대. 항구와 원도심을 높은 곳에서 내려다본 뒤 실내 문화공간에서 쉬어 가는 구성입니다.' },
+];
+---
+<BaseLayout
+  title={withSiteName('주변 명소·추천 동선')}
+  description="신포국제시장 주변 명소와 추천 동선을 안내합니다. 개항장 거리, 자유공원, 홍예문, 차이나타운, 인천아트플랫폼, 답동성당 일대를 반나절 코스로 묶는 방법과 비 오는 날 대안을 정리했습니다."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumb(site, crumbs))}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(faqPage(faqs))}></script>
+
+  <section class="legal-hero"><div class="shell">
+    <nav class="breadcrumb" aria-label="경로"><a href="/">홈</a><em aria-hidden="true">›</em><span>주변 명소</span></nav>
+    <span class="kicker">주변 연계</span>
+    <h1>시장을 넘어<br/>개항장 한 바퀴</h1>
+    <p>신포국제시장은 개항장 역사공간과 걸어서 연결하기 좋은 위치입니다. 식사만 하고 돌아가기보다 도시가 항구를 통해 어떻게 변했는지 함께 살펴보면 방문의 맥락이 선명해집니다.</p>
+  </div></section>
+
+  <section class="section"><div class="shell">
+    <div class="section-head"><div><span class="kicker">도보 연계 명소</span><h2>시장에서<br/>걸어갈 수 있는 곳</h2></div><p>아래 장소는 개항 이후 인천 원도심이 형성된 흐름을 읽는 데 도움이 되는 곳들입니다. 운영시간과 휴관일은 장소별로 다릅니다.</p></div>
+    <div class="nearby-grid">
+      {spots.map((spot) => (
+        <article class="nearby-card"><span class="distance">{spot.distance}</span><h3>{spot.name}</h3><p>{spot.text}</p></article>
+      ))}
+    </div>
+  </div></section>
+
+  <section class="section alt"><div class="shell">
+    <div class="section-head"><div><span class="kicker">추천 동선</span><h2>반나절을<br/>어떻게 묶을까</h2></div><p>정해진 정답 코스는 없습니다. 아래 제안은 이동 부담을 줄이면서 시장과 개항장의 관계를 함께 이해하기 위한 구성입니다.</p></div>
+    <div class="route-list">
+      {courses.map((course) => (
+        <article class="route"><div class="route-icon">{course.icon}</div><div><h3>{course.name}</h3><p>{course.text}</p></div></article>
+      ))}
+    </div>
+    <div class="verification">
+      <div><strong>추천 동선 1</strong><span>신포시장 → 개항장 거리 → 자유공원</span></div>
+      <div><strong>추천 동선 2</strong><span>신포시장 → 홍예문 → 답동 일대</span></div>
+      <div><strong>비 오는 날</strong><span>시장 아케이드 + 실내 문화공간 중심</span></div>
+      <div><strong>보행 주의</strong><span>원도심 일부 구간은 경사가 있음</span></div>
+    </div>
+  </div></section>
+
+  <section class="section"><div class="shell">
+    <div class="section-head"><div><span class="kicker">이동 팁</span><h2>걷는 시간을<br/>줄이는 요령</h2></div><p>원도심은 골목과 경사가 많습니다. 체력과 날씨를 고려해 동선을 조절하세요.</p></div>
+    <div class="visit-grid">
+      <article class="info-card accent"><h3>신발과 짐</h3><p>경사 구간과 계단이 있어 편한 신발이 유용합니다. 큰 캐리어는 역이나 숙소에 맡기고 가볍게 이동하세요.</p></article>
+      <article class="info-card"><h3>혼잡 회피</h3><p>주말 오후의 인기 구역은 보행 속도가 느려집니다. 이동 시간을 여유 있게 잡으세요.</p></article>
+      <article class="info-card"><h3>날씨 대안</h3><p>비가 오면 아케이드와 실내 문화공간 중심으로, 더운 날에는 그늘과 공원 구간을 활용하세요.</p></article>
+      <article class="info-card"><h3>귀가 동선</h3><p>저녁 시간대에는 택시 수요가 늘 수 있습니다. 신포역과 인천역 중 숙소 방향에 유리한 역을 미리 정하세요.</p></article>
+      <article class="info-card"><h3>화장실</h3><p>시장 건물 내부 화장실을 먼저 이용하고 이동하면 중간에 찾는 수고를 줄일 수 있습니다.</p></article>
+      <article class="info-card"><h3>사진 촬영</h3><p>상업 촬영이나 삼각대 사용은 공간별로 제한될 수 있습니다. 안내 표지를 확인하세요.</p></article>
+    </div>
+  </div></section>
+
+  <section class="section alt"><div class="shell">
+    <div class="section-head"><div><span class="kicker">함께 보기</span><h2>동선을 짠 뒤<br/>볼 페이지</h2></div><p>코스를 정했다면 시간과 교통 정보를 함께 확인하세요.</p></div>
+    <div class="cluster-grid">
+      <a class="cluster-card" href="/hours/"><span class="tag">운영</span><h3>영업시간·휴무</h3><p>시장 방문 시간을 정하고 점포별 차이를 확인하세요.</p><span class="go">자세히 보기 →</span></a>
+      <a class="cluster-card" href="/location/"><span class="tag">교통</span><h3>위치·가는 법</h3><p>신포역 도보 동선과 공항에서 오는 경로를 확인하세요.</p><span class="go">자세히 보기 →</span></a>
+      <a class="cluster-card" href="/food/"><span class="tag">먹거리</span><h3>시장 먹거리</h3><p>동선 중간에 즐기기 좋은 음식 유형을 정리했습니다.</p><span class="go">자세히 보기 →</span></a>
+      <a class="cluster-card" href="/#nearby"><span class="tag">요약</span><h3>주변 명소 요약</h3><p>첫 페이지의 주변 명소 요약으로 돌아가 전체를 점검하세요.</p><span class="go">자세히 보기 →</span></a>
+    </div>
+  </div></section>
+
+  <section class="section" id="faq"><div class="shell">
+    <div class="section-head"><div><span class="kicker">자주 묻는 질문</span><h2>주변 연계<br/>질문 모음</h2></div><p>야외 공간과 문화시설의 운영 정보는 장소별로 다르므로 개별 확인이 필요합니다.</p></div>
+    <div class="faq-grid">{faqs.map(([question, answer]) => <details><summary>{question}</summary><p>{answer}</p></details>)}</div>
+  </div></section>
+</BaseLayout>

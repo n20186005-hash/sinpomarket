@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withSiteName } from '../../data/site';
 ---
-<BaseLayout title="쿠키 설정 | 신포국제시장 여행정보 가이드" description="신포국제시장 여행정보 가이드의 쿠키와 분석 설정을 관리합니다.">
+<BaseLayout title={withSiteName('쿠키 설정')} description="신포국제시장 여행 가이드의 쿠키와 분석 설정을 관리합니다.">
 <section class="legal-hero"><div class="shell"><span class="kicker">정책</span><h1>쿠키 설정</h1><p>최종 업데이트: 2026년 8월 · 분석 기능은 기본 비활성화입니다. 이 페이지에서 언제든 선호 설정을 바꿀 수 있습니다.</p></div></section>
 <section class="legal-content"><div class="shell"><article>
 <div class="policy-box"><strong>동의 방식</strong><p>필수 기능을 제외한 분석 항목은 이용자가 직접 허용한 경우에만 활성화됩니다. ‘모두 거부’를 선택해도 핵심 관광정보 열람에는 지장이 없습니다.</p></div>

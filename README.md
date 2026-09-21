@@ -1,4 +1,4 @@
-# 신포국제시장 여행정보 가이드
+# 신포국제시장 인천 여행 가이드
 
 인천광역시 제물포구 신포국제시장을 위한 독립 비영리 관광정보 사이트입니다. 화면 언어는 한국어 단일 언어이며, 특정 상점이나 숙박업체를 상업적으로 추천하지 않습니다.
 
@@ -17,10 +17,23 @@
 도메인은 `astro.config.mjs`의 `SITE_URL` 한 곳에서만 설정합니다.
 
 ```js
-const SITE_URL = '';
+const SITE_URL = 'https://sinpomarket.org';
 ```
 
-도메인이 없으면 빈 문자열을 유지하세요. 이 경우 canonical은 상대경로로 동작하고 절대 URL이 필요한 Open Graph 항목은 생략되며, sitemap 통합도 활성화되지 않습니다. 실제 HTTPS 도메인을 입력하면 canonical, Open Graph, JSON-LD, sitemap이 동일한 `Astro.site` 값을 사용합니다.
+이 값이 설정되어 있으므로 모든 페이지의 canonical, `og:url`, JSON-LD의 절대 URL과 `sitemap-index.xml`이 동일한 `Astro.site` 값을 사용합니다. 도메인을 바꿀 때는 이 한 곳만 수정하세요. 값을 비우면 canonical이 상대경로로 동작하고 절대 URL이 필요한 Open Graph 항목은 생략되며 sitemap 통합도 비활성화됩니다.
+
+## 페이지 구성
+
+| 경로 | 역할 |
+| --- | --- |
+| `/` | 시장 이야기·먹거리·방문 정보·교통·주변 명소 요약과 주제별 안내 링크(허브) |
+| `/food/` | 음식 유형과 주문 전 확인 사항 |
+| `/location/` | 주소·좌표·지도와 지하철·공항·버스·택시·주차 경로 |
+| `/hours/` | 영업시간·휴무, 시간대별 혼잡, 편의시설 |
+| `/nearby/` | 주변 명소와 추천 동선 |
+| `/privacy/`, `/terms/`, `/cookies/` | 정책 페이지 |
+
+구조화 데이터는 홈의 `TouristAttraction`·`LocalBusiness`·`FAQPage`, 하위 페이지의 `BreadcrumbList`·`FAQPage`로 구성되며 장소 `@id`는 항상 홈 URL을 가리켜 하나의 개체로 취급됩니다.
 
 ## 로컬 실행
 

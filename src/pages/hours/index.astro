@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { MARKET, withSiteName, type Faq } from '../../data/site';
+import { breadcrumb, faqPage } from '../../lib/schema';
+
+const site = Astro.site;
+const crumbs = [
+  { name: '홈', path: '/' },
+  { name: '영업시간', path: '/hours/' },
+];
+const faqs: Faq[] = [
+  ['신포국제시장 영업시간은 몇 시부터 몇 시까지인가요?', `공식 관광안내에는 일반 이용시간이 ${MARKET.openingHours}로 표시되어 있습니다. 다만 점포별로 문을 여는 시간과 닫는 시간이 다르므로 개별 방문 목적이 있다면 현장 안내를 확인하세요.`],
+  ['정기 휴무일이 있나요?', '인천투어 안내에는 매월 첫째 월요일과 설·추석 당일 휴무가 표시되어 있습니다. 다만 점포별로 다를 수 있어 중요한 방문이라면 출발 전에 운영 여부를 확인하는 편이 안전합니다.'],
+  ['명절 연휴에도 문을 여나요?', '명절 전후에는 운영 시간이 달라지거나 일부 점포가 쉬는 경우가 있습니다. 공식 안내 채널과 지도 서비스의 당일 영업정보를 함께 확인하세요.'],
+  ['언제 방문하면 덜 붐비나요?', '평일 낮 시간대가 비교적 한산합니다. 주말 저녁과 식사 시간대는 먹거리 골목 대기가 길어지므로 여유 있게 계획하세요.'],
+  ['화장실과 수유실이 있나요?', '시장 건물 내부에 남녀 구분 화장실이 안내되어 있고, 지원센터 내 수유실 정보가 공식 자료에 표시되어 있습니다. 장애인 화장실 안내도 확인됩니다.'],
+  ['현금만 받는 점포가 있나요?', '결제 수단은 점포마다 다를 수 있습니다. 소액 현금과 카드·모바일 결제를 함께 준비하면 결제 과정이 수월합니다.'],
+];
+const slots = [
+  { icon: '🌅', name: '오전', text: '식재료와 생활품을 중심으로 움직이는 시간대입니다. 비교적 한산해 시장 구조를 천천히 살펴보기 좋습니다.' },
+  { icon: '☀️', name: '낮~이른 저녁', text: '대부분의 점포가 운영하는 시간대로, 먹거리와 장보기를 함께 하기 좋은 구간입니다.' },
+  { icon: '🌆', name: '저녁', text: '간판 불이 켜지고 먹거리 골목이 가장 활기를 띠는 시간입니다. 인기 메뉴의 대기가 길어질 수 있습니다.' },
+  { icon: '🌙', name: '늦은 저녁', text: '점포별 영업 종료 시간이 달라 문을 닫는 곳이 늘어납니다. 늦은 방문은 사전 확인이 필요합니다.' },
+];
+const facilities = [
+  ['화장실', '시장 건물 내부에 남녀 구분 화장실이 안내되어 있으며 장애인 화장실 정보도 공식 자료에서 확인됩니다.'],
+  ['수유실', '지원센터 내 수유실이 안내되어 있습니다. 위치와 이용 가능 시간은 현장 안내를 따릅니다.'],
+  ['무장애 동선', '주출입구 경사로, 휠체어 통과 가능한 출입구, 장애인 전용 주차면이 안내되어 있습니다.'],
+  ['안내데스크', '공개 자료에 안내데스크 관련 정보가 포함되어 있습니다. 운영 여부는 방문 시점에 따라 달라질 수 있습니다.'],
+  ['반려동물', '목줄 착용과 배설물 처리용품을 준비한 경우 동반이 가능하다고 안내됩니다. 식품 취급 점포의 출입 기준은 현장에서 확인하세요.'],
+  ['외국어 안내', '인천투어에 영어·중국어·일본어 리플릿 비치가 안내되어 있습니다. 제공 여부는 현장 재고에 따라 달라질 수 있습니다.'],
+];
+---
+<BaseLayout
+  title={withSiteName('영업시간·휴무 안내')}
+  description={`신포국제시장 영업시간·휴무 안내입니다. 공식 관광안내 기준 일반 이용시간 ${MARKET.openingHours}, 매월 첫째 월요일·설·추석 당일 휴무, 점포별 차이, 혼잡 시간대와 화장실·수유실·무장애 편의시설을 정리했습니다.`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumb(site, crumbs))}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(faqPage(faqs))}></script>
+
+  <section class="legal-hero"><div class="shell">
+    <nav class="breadcrumb" aria-label="경로"><a href="/">홈</a><em aria-hidden="true">›</em><span>영업시간</span></nav>
+    <span class="kicker">영업시간·휴무</span>
+    <h1>신포국제시장<br/>영업시간과 휴무</h1>
+    <p>시장 전체를 하나의 영업시간으로 단정하지 않습니다. 공식 관광안내의 일반 안내 시간과 점포별 차이, 명절 변동 가능성을 함께 확인하세요.</p>
+  </div></section>
+
+  <section class="section"><div class="shell">
+    <div class="visit-grid">
+      <article class="info-card accent"><h3>일반 안내 이용시간</h3><p><strong>{MARKET.openingHours}</strong><br/>공식 관광안내에 표시된 값이며 점포별로 다를 수 있습니다.</p></article>
+      <article class="info-card"><h3>휴무 안내</h3><p>매월 첫째 월요일, 설·추석 당일 휴무가 공식 안내에 표시되어 있습니다. 개별 점포는 다를 수 있습니다.</p></article>
+      <article class="info-card"><h3>입장료</h3><p>시장 입장료는 없습니다. 음식·상품 구매와 주차는 개별 결제입니다.</p></article>
+      <article class="info-card"><h3>권장 체류 시간</h3><p>시장만 보면 1.5~2.5시간, 개항장 주변까지 함께 보면 반나절 정도를 잡는 방식이 무난합니다.</p></article>
+      <article class="info-card"><h3>혼잡도</h3><p>주말 저녁과 식사 시간대가 가장 붐빕니다. 평일 낮이 비교적 여유롭습니다.</p></article>
+      <article class="info-card"><h3>확인 방법</h3><p>중요한 방문이라면 당일 공식 안내 채널과 지도 서비스의 영업정보를 함께 확인하세요.</p></article>
+    </div>
+    <div class="neutral-note"><strong>왜 시간을 단정하지 않나요?</strong> · 전통시장은 상인별로 개점·폐점 시간이 다르고, 행사·공사·명절에 따라 운영이 바뀝니다. 서로 다른 공식 페이지의 값이 다를 때는 변동성을 그대로 표시하는 편이 정확합니다.</div>
+  </div></section>
+
+  <section class="section alt"><div class="shell">
+    <div class="section-head"><div><span class="kicker">시간대별 풍경</span><h2>같은 시장,<br/>시간마다 다른 표정</h2></div><p>아래 구분은 일반적인 경향을 설명한 것입니다. 계절·요일·행사 일정에 따라 달라질 수 있습니다.</p></div>
+    <div class="food-grid">
+      {slots.map((slot) => (
+        <article class="food-card"><div class="icon">{slot.icon}</div><h3>{slot.name}</h3><p>{slot.text}</p></article>
+      ))}
+    </div>
+  </div></section>
+
+  <section class="section"><div class="shell">
+    <div class="section-head"><div><span class="kicker">편의시설</span><h2>현장에서<br/>이용할 수 있는 것</h2></div><p>공개 관광자료에 안내된 항목을 중심으로 정리했습니다. 운영 여부와 위치는 방문 시점에 따라 달라질 수 있습니다.</p></div>
+    <div class="visit-grid">
+      {facilities.map(([name, text]) => (
+        <article class="info-card"><h3>{name}</h3><p>{text}</p></article>
+      ))}
+    </div>
+  </div></section>
+
+  <section class="section alt"><div class="shell">
+    <div class="section-head"><div><span class="kicker">변동 요소</span><h2>방문 전<br/>다시 확인할 항목</h2></div><p>명절·행사·시설 공사는 영업시간과 동선에 직접적인 영향을 줍니다. 아래 항목을 출발 당일 점검하세요.</p></div>
+    <div class="transport-layout">
+      <div class="route-list">
+        <article class="route"><div class="route-icon">📅</div><div><h3>명절·연휴</h3><p>설·추석 전후에는 휴무일과 운영 시간이 달라질 수 있습니다. 공식 안내와 지도 서비스의 정보를 함께 확인하세요.</p></div></article>
+        <article class="route"><div class="route-icon">🚧</div><div><h3>시설 공사</h3><p>아케이드 정비나 도로 공사는 출입구와 보행 동선을 바꿉니다. 우회 안내 표지를 따르세요.</p></div></article>
+        <article class="route"><div class="route-icon">🎪</div><div><h3>행사·축제</h3><p>행사 기간에는 특정 구역이 혼잡하거나 일부 점포 운영이 조정될 수 있습니다.</p></div></article>
+      </div>
+      <aside class="transport-note light"><h3>확인 순서</h3><ol><li><strong>방문 날짜</strong>가 공식 휴무 안내에 해당하는지 확인합니다.</li><li>목적이 특정 메뉴라면 <strong>점포별 운영 시간</strong>을 지도 서비스에서 확인합니다.</li><li><strong>혼잡 시간대</strong>를 피해 체류 시간을 배분합니다.</li><li>대중교통 이용 시 <strong>막차 시간</strong>을 마지막으로 점검합니다.</li></ol><p>본 사이트는 특정 점포의 영업 여부를 실시간으로 제공하지 않습니다.</p></aside>
+    </div>
+  </div></section>
+
+  <section class="section"><div class="shell">
+    <div class="section-head"><div><span class="kicker">함께 보기</span><h2>시간을 정한 뒤<br/>볼 페이지</h2></div><p>방문 시간을 정했다면 동선과 먹거리 정보를 함께 살펴보세요.</p></div>
+    <div class="cluster-grid">
+      <a class="cluster-card" href="/location/"><span class="tag">교통</span><h3>위치·가는 법</h3><p>수인분당선 신포역 도보 동선과 주차 정보를 확인하세요.</p><span class="go">자세히 보기 →</span></a>
+      <a class="cluster-card" href="/food/"><span class="tag">먹거리</span><h3>시장 먹거리</h3><p>시간대별로 즐기기 좋은 음식 유형과 주문 요령을 정리했습니다.</p><span class="go">자세히 보기 →</span></a>
+      <a class="cluster-card" href="/nearby/"><span class="tag">연계</span><h3>주변 명소</h3><p>시장 방문 전후로 연결하기 좋은 개항장 명소를 소개합니다.</p><span class="go">자세히 보기 →</span></a>
+      <a class="cluster-card" href="/#visit"><span class="tag">요약</span><h3>방문 정보 요약</h3><p>첫 페이지의 방문 정보 요약으로 돌아가 전체를 점검하세요.</p><span class="go">자세히 보기 →</span></a>
+    </div>
+  </div></section>
+
+  <section class="section alt" id="faq"><div class="shell">
+    <div class="section-head"><div><span class="kicker">자주 묻는 질문</span><h2>영업시간 관련<br/>질문 모음</h2></div><p>아래 답변은 공개 관광자료의 일반 안내를 바탕으로 하며, 실제 운영은 점포와 시점에 따라 달라질 수 있습니다.</p></div>
+    <div class="faq-grid">{faqs.map(([question, answer]) => <details><summary>{question}</summary><p>{answer}</p></details>)}</div>
+  </div></section>
+</BaseLayout>

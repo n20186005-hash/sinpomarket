@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://sinpomarket.org/sitemap-index.xml

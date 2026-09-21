@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withSiteName, type Faq } from '../../data/site';
+import { breadcrumb, faqPage } from '../../lib/schema';
+
+const site = Astro.site;
+const crumbs = [
+  { name: '홈', path: '/' },
+  { name: '먹거리', path: '/food/' },
+];
+const faqs: Faq[] = [
+  ['신포국제시장의 대표 음식은 무엇인가요?', '닭강정, 쫄면, 만두·분식, 공갈빵 계열의 중화식 제과가 자주 언급되는 유형입니다. 특정 상점을 추천하지 않으며, 같은 메뉴라도 점포별 맛·가격·조리법이 다릅니다.'],
+  ['닭강정은 매운맛 조절이 가능한가요?', '점포마다 양념 배합과 맵기 단계가 다릅니다. 주문 전에 매운 정도를 확인하고, 어린이와 함께라면 순한 맛이나 양념을 줄이는 방식을 문의하세요.'],
+  ['채식이나 알레르기 제한이 있어도 먹을 수 있나요?', '대부분의 시장 음식은 육수·양념에 동물성 재료나 견과류, 갑각류 성분이 들어갈 수 있습니다. 성분 정보를 제공하는 점포인지 먼저 확인하고 불확실하면 다른 메뉴를 선택하세요.'],
+  ['음식 가격은 어느 정도인가요?', '점포와 메뉴 구성에 따라 달라지므로 고정 가격을 제시하지 않습니다. 현장 가격표를 기준으로 확인하고, 포장·매장 취식 여부에 따라 구성이 달라질 수 있습니다.'],
+  ['포장해서 숙소에서 먹어도 괜찮을까요?', '포장 수요가 많은 메뉴가 많습니다. 튀김류는 시간이 지나면 식감이 떨어지므로 이동 시간을 고려하고, 국물류는 용기 상태와 보온을 확인하세요.'],
+  ['현금만 받는 곳도 있나요?', '결제수단은 점포마다 다릅니다. 소액 현금과 카드·모바일 결제 수단을 함께 준비하면 대기 시간을 줄일 수 있습니다.'],
+];
+const foods = [
+  { icon: '🍗', name: '닭강정', text: '튀긴 닭에 달고 매콤한 양념을 입힌 시장 대표 간식 유형입니다. 포장 수요가 많아 저녁 시간대에 대기가 생길 수 있습니다.' },
+  { icon: '🥢', name: '쫄면', text: '쫄깃한 면을 매콤새콤한 양념에 비벼 먹는 메뉴로, 인천 지역 분식 문화와 함께 설명되는 대표적인 면 요리입니다.' },
+  { icon: '🥟', name: '만두·분식', text: '만두, 떡볶이, 튀김, 김밥처럼 골목을 오가며 짧은 동선에서 맛보기 좋은 전통시장형 간식과 한 끼 음식입니다.' },
+  { icon: '🥖', name: '공갈빵·중화 제과', text: '개항장 중국 음식문화와 연결해 설명되는 바삭한 제과류입니다. 인천 원도심 이주사의 맥락과 함께 보면 이해가 넓어집니다.' },
+  { icon: '🍲', name: '국수·한 그릇 식사', text: '잔치국수, 칼국수, 전골류처럼 시장에서 점심 한 끼로 즐기는 메뉴 유형입니다. 좌석 규모가 작아 식사 시간대가 혼잡할 수 있습니다.' },
+  { icon: '🐟', name: '해산물·건어물', text: '항구 도시 인천의 생활 식재료 문화를 보여주는 품목입니다. 포장·택배 가능 여부와 보관 방법은 점포에 문의하세요.' },
+];
+const checks = [
+  '가격표가 메뉴와 함께 명확하게 게시되어 있는지',
+  '알레르기 유발 성분과 매운맛 정도를 설명받을 수 있는지',
+  '조리 대기 시간과 포장 가능 여부를 안내받을 수 있는지',
+  '좌석·위생 상태·일회용품 사용 방식을 직접 확인할 수 있는지',
+];
+---
+<BaseLayout
+  title={withSiteName('먹거리 가이드 · 닭강정·쫄면')}
+  description="신포국제시장에서 자주 만나는 음식 유형(닭강정·쫄면·만두·공갈빵·국수·해산물)을 정리했습니다. 특정 상점 추천 없이 가격·알레르기·대기시간·결제 확인 요령과 포장 팁을 안내합니다."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumb(site, crumbs))}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(faqPage(faqs))}></script>
+
+  <section class="legal-hero"><div class="shell">
+    <nav class="breadcrumb" aria-label="경로"><a href="/">홈</a><em aria-hidden="true">›</em><span>먹거리</span></nav>
+    <span class="kicker">먹거리 이해</span>
+    <h1>신포국제시장 먹거리,<br/>메뉴의 맥락부터</h1>
+    <p>특정 상점이나 인기 순위를 추천하지 않고, 신포국제시장과 인천 원도심에서 반복해서 만나는 음식 유형과 주문 전 확인할 점을 정리했습니다. 가격·맛·조리법은 점포마다 다르므로 현장 표기를 우선하세요.</p>
+  </div></section>
+
+  <section class="section"><div class="shell">
+    <div class="section-head"><div><span class="kicker">음식 유형</span><h2>가게 이름보다<br/>음식의 계보를 먼저</h2></div><p>아래 항목은 자주 언급되는 유형을 묶은 것입니다. 같은 이름의 메뉴라도 점포별로 양념, 면의 굵기, 튀김옷, 가격 구성이 다릅니다.</p></div>
+    <div class="food-grid">
+      {foods.map((food) => (
+        <article class="food-card"><div class="icon">{food.icon}</div><h3>{food.name}</h3><p>{food.text}</p></article>
+      ))}
+    </div>
+    <div class="neutral-note"><strong>중립적 선택 기준</strong> · 위생 상태와 가격표가 명확한지, 알레르기·매운맛 정보를 확인할 수 있는지, 일회용품을 줄일 수 있는지 등을 기준으로 직접 비교하세요. 특정 상호나 인기 순위는 제공하지 않습니다.</div>
+  </div></section>
+
+  <section class="section alt"><div class="shell">
+    <div class="section-head"><div><span class="kicker">주문 전 체크</span><h2>줄을 서기 전에<br/>확인할 것</h2></div><p>시장 음식은 조리 즉시 제공되는 경우가 많아 주문 후 변경이 어렵습니다. 아래 항목을 미리 확인하면 대기와 실수를 줄일 수 있습니다.</p></div>
+    <div class="visit-grid">
+      <article class="info-card accent"><h3>가격·구성</h3><p>현장 가격표를 기준으로 확인하세요. 포장과 매장 취식의 구성이나 양이 다를 수 있으며, 곱빼기·추가 토핑은 별도 비용입니다.</p></article>
+      <article class="info-card"><h3>매운맛·염도</h3><p>같은 메뉴라도 점포마다 양념 배합이 다릅니다. 매운 정도를 조절할 수 있는지 주문 전에 문의하세요.</p></article>
+      <article class="info-card"><h3>알레르기</h3><p>육수와 양념에 동물성 재료, 견과류, 갑각류 성분이 포함될 수 있습니다. 성분 설명이 가능한지 확인하고 불확실하면 다른 메뉴를 선택하세요.</p></article>
+      <article class="info-card"><h3>대기·혼잡</h3><p>주말 저녁과 식사 시간대에는 대기가 길어집니다. 이동 계획이 있다면 포장 가능 여부와 예상 대기 시간을 먼저 확인하세요.</p></article>
+      <article class="info-card"><h3>결제 수단</h3><p>점포별로 가능한 결제 수단이 다릅니다. 소액 현금과 카드·모바일 결제를 함께 준비하면 편리합니다.</p></article>
+      <article class="info-card"><h3>포장·보관</h3><p>튀김류는 시간이 지나면 식감이 떨어지고 국물류는 온도가 중요합니다. 숙소까지의 이동 시간을 고려해 메뉴를 고르세요.</p></article>
+    </div>
+    <div class="source-box" style="margin-top:26px"><strong>현장에서 직접 확인할 항목</strong><ul>{checks.map((item) => <li>{item}</li>)}</ul></div>
+  </div></section>
+
+  <section class="section"><div class="shell">
+    <div class="section-head"><div><span class="kicker">동선과 시간</span><h2>먹거리 동선을<br/>짧게 만드는 요령</h2></div><p>시장 골목은 폭이 좁고 시간대별 혼잡도가 크게 달라집니다. 먹거리 위주로 움직일 때의 기본 원칙만 정리했습니다.</p></div>
+    <div class="transport-layout">
+      <div class="route-list">
+        <article class="route"><div class="route-icon">🕒</div><div><h3>낮 시간대</h3><p>점포가 대부분 운영하는 시간대입니다. 대기가 짧고 사진·관찰에 유리하지만, 일부 튀김류는 갓 조리된 물량을 기다려야 할 수 있습니다.</p></div></article>
+        <article class="route"><div class="route-icon">🌆</div><div><h3>저녁 초입</h3><p>간판 불이 켜지고 먹거리 골목이 활기를 띠는 시간입니다. 인기 메뉴의 대기가 가장 길어지므로 포장 줄과 매장 줄을 구분해 확인하세요.</p></div></article>
+        <article class="route"><div class="route-icon">☔</div><div><h3>비 오는 날</h3><p>아케이드가 있는 구간을 중심으로 이동하면 동선이 짧습니다. 실내 좌석이 적은 점포가 많아 포장을 활용하는 방식이 편합니다.</p></div></article>
+      </div>
+      <aside class="transport-note light"><h3>한 번에 맛보는 순서</h3><ol><li><strong>짠맛이 강한 메뉴를 뒤로</strong> 미루면 양념이 겹치지 않습니다.</li><li><strong>튀김·구이류는 먼저</strong>, 국물·면류는 뒤에 두면 이동 중 식감 저하가 적습니다.</li><li><strong>물·음료를 별도로</strong> 준비하면 매운 양념 메뉴를 편하게 즐길 수 있습니다.</li><li><strong>봉투·용기</strong>는 점포마다 제공 방식이 다르므로 개수와 비용을 확인하세요.</li></ol><p>특정 메뉴의 맛이나 순위를 평가하지 않으며, 선택 기준만 제공합니다.</p></aside>
+    </div>
+  </div></section>
+
+  <section class="section alt"><div class="shell">
+    <div class="section-head"><div><span class="kicker">다른 정보로</span><h2>먹거리 다음에<br/>볼 페이지</h2></div><p>음식만 보고 돌아가기보다 시장의 역사와 개항장 원도심을 함께 살펴보면 방문의 맥락이 선명해집니다.</p></div>
+    <div class="cluster-grid">
+      <a class="cluster-card" href="/location/"><span class="tag">교통</span><h3>위치·가는 법</h3><p>수인분당선 신포역 도보 동선, 공항에서 오는 철도 경로, 주차 정보를 정리했습니다.</p><span class="go">자세히 보기 →</span></a>
+      <a class="cluster-card" href="/hours/"><span class="tag">운영</span><h3>영업시간·휴무</h3><p>일반 안내 시간과 휴무 기준, 혼잡 시간대, 편의시설 정보를 확인하세요.</p><span class="go">자세히 보기 →</span></a>
+      <a class="cluster-card" href="/nearby/"><span class="tag">연계</span><h3>주변 명소·동선</h3><p>개항장 거리, 차이나타운, 자유공원을 묶는 반나절 코스를 제안합니다.</p><span class="go">자세히 보기 →</span></a>
+      <a class="cluster-card" href="/#story"><span class="tag">이야기</span><h3>시장의 역사</h3><p>개항기 채소 장터에서 오늘의 신포국제시장까지의 흐름을 소개합니다.</p><span class="go">자세히 보기 →</span></a>
+    </div>
+  </div></section>
+
+  <section class="section" id="faq"><div class="shell">
+    <div class="section-head"><div><span class="kicker">자주 묻는 질문</span><h2>먹거리 관련<br/>질문 모음</h2></div><p>아래 답변은 일반적인 유형 안내입니다. 실제 가격·성분·운영 여부는 점포와 방문 시점에 따라 달라질 수 있습니다.</p></div>
+    <div class="faq-grid">{faqs.map(([question, answer]) => <details><summary>{question}</summary><p>{answer}</p></details>)}</div>
+    <p class="rating-note" style="margin-top:24px">음식 사진은 신포시장에서 자주 볼 수 있는 음식 유형을 설명하기 위한 일반 예시이며 특정 점포의 상품이 아닙니다.</p>
+  </div></section>
+</BaseLayout>
