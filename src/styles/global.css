@@ -18,3 +18,10 @@
 @media(max-width:640px){.shell{width:min(100% - 28px,1160px)}.site-header{position:static}.header-inner{height:auto}.brand img{width:150px}.header-cta{font-size:.82rem;padding:0 13px}.hero{min-height:650px}.hero-content{padding-top:72px}.hero h1{font-size:3.45rem}.fact-grid,.food-grid,.cluster-grid,.visit-grid,.nearby-grid,.faq-grid,.verification,.footer-grid{grid-template-columns:1fr}.fact{border-right:0!important;border-bottom:1px solid rgba(255,255,255,.12)!important}.section{padding:70px 0}.section-head{gap:12px;margin-bottom:30px}.section-head h2{font-size:2.65rem}.photo-grid{grid-template-columns:1fr;grid-template-rows:330px 220px 220px}.photo-grid figure:first-child{grid-row:auto}.map-frame{min-height:390px}.footer-grid>div:first-child{grid-column:auto}.footer-bottom{flex-direction:column}.route{grid-template-columns:46px 1fr;padding:20px}.route-icon{width:42px;height:42px}.mobile-only{display:block}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
 :focus-visible{outline:3px solid var(--mint);outline-offset:3px}
+
+/* Keep all navigation visible and avoid narrow-grid text overflow. */
+.header-cta,button,.button,.site-header nav a{min-height:44px}
+.grid>*,.section-head>*,.story-grid>*,.transport-layout>*,.map-wrap>*{min-width:0}
+h1,h2,h3,p,a,dd{overflow-wrap:anywhere}
+@media(max-width:940px){.site-header nav{flex-wrap:wrap;overflow:visible;gap:0 18px}.header-cta{min-height:44px}}
+@media(max-width:640px){.photo-credit{position:relative;left:auto;bottom:auto;border-radius:0;margin:0;font-size:.75rem}.photo-grid figure{display:flex;flex-direction:column}.photo-grid img{min-height:0;flex:1;object-fit:cover}.photo-grid{grid-template-rows:400px 300px 300px}}

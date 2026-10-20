@@ -1,4 +1,5 @@
 ---
+import FactSnapshot from '../../components/FactSnapshot.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { withSiteName, type Faq } from '../../data/site';
 import { breadcrumb, faqPage } from '../../lib/schema';
@@ -9,42 +10,44 @@ const crumbs = [
   { name: '주변 명소', path: '/nearby/' },
 ];
 const faqs: Faq[] = [
-  ['신포국제시장 주변에 무엇이 있나요?', '개항장 거리, 자유공원, 홍예문, 차이나타운, 인천아트플랫폼 일대, 답동성당 일대 등이 도보 연계권으로 소개됩니다. 모두 개항기 도시 형성과 관련된 장소입니다.'],
-  ['시장과 차이나타운을 하루에 함께 볼 수 있나요?', '걸어서 연결할 수 있는 거리입니다. 시장에서 식사한 뒤 개항장 거리와 차이나타운으로 이동하는 반나절 코스가 일반적입니다.'],
+  ['신포국제시장 주변에 무엇이 있나요?', '인천투어는 차이나타운·자유공원·홍예문을 주변 관광지로 소개합니다. 다른 후보도 별도 위치·운영 확인이 필요하며, 모든 곳이 같은 도보 동선이나 개방 조건을 갖는 것은 아닙니다.'],
+  ['시장과 차이나타운을 하루에 함께 볼 수 있나요?', '별도 후보 목적지로 계획할 수 있으나, 이 가이드는 당일 도보 경로와 입장 가능 여부를 확인하지 않았습니다. 각 장소의 운영과 이동 경로를 확인한 뒤 일정을 정하세요.'],
   ['비가 오는 날에도 걸어 다닐 수 있나요?', '시장 아케이드 구간은 비를 피하기 좋습니다. 다만 원도심 일부 구간은 경사와 계단이 있어 우산과 미끄럼에 주의하세요.'],
   ['아이와 함께 가기 좋은 동선이 있나요?', '경사가 큰 구간을 줄이고 시장 아케이드와 개방형 광장·공원을 중심으로 묶는 방식이 무난합니다. 유모차는 혼잡 시간대를 피하는 편이 편합니다.'],
-  ['주변 명소의 운영시간도 같은가요?', '장소마다 다릅니다. 야외 공간은 상시 개방형인 곳이 많지만 전시·문화시설은 별도의 운영시간과 휴관일이 있으므로 개별 확인이 필요합니다.'],
+  ['주변 명소의 운영시간도 같은가요?', '시장과 별개의 장소이므로 운영시간·휴관·입장 조건을 각각 확인해야 합니다. 야외 장소도 상시 개방을 가정하지 마세요.'],
 ];
 const spots = [
-  { distance: '도보 연계권', name: '개항장 거리', text: '근대 건축과 개항 이후 도시 구조를 살펴보기 좋은 역사문화 거리. 시장의 국제적 배경을 이해하는 데 도움이 됩니다.' },
-  { distance: '도보 연계권', name: '자유공원', text: '인천항과 원도심의 지형을 높은 곳에서 조망할 수 있어 시장 방문 전후 도시의 공간감을 이해하기 좋습니다.' },
-  { distance: '도보 연계권', name: '홍예문', text: '개항기 도시 확장과 연결되는 석조 아치 구조물. 주변 경사와 오래된 골목을 함께 관찰할 수 있습니다.' },
+  { distance: '별도 경로 확인', name: '개항장 거리', text: '근대 건축과 개항 이후 도시 구조를 살펴보기 좋은 역사문화 거리. 시장의 국제적 배경을 이해하는 데 도움이 됩니다.' },
+  { distance: '별도 경로 확인', name: '자유공원', text: '인천항과 원도심의 지형을 높은 곳에서 조망할 수 있어 시장 방문 전후 도시의 공간감을 이해하기 좋습니다.' },
+  { distance: '별도 경로 확인', name: '홍예문', text: '개항기 도시 확장과 연결되는 석조 아치 구조물. 주변 경사와 오래된 골목을 함께 관찰할 수 있습니다.' },
   { distance: '인천역 방향', name: '차이나타운', text: '화교 사회와 음식문화, 인천 개항장의 이주사를 함께 살펴볼 수 있는 대표적인 역사문화 구역입니다.' },
-  { distance: '개항장 권역', name: '인천아트플랫폼 일대', text: '근대 창고·상업건축을 문화공간으로 재활용한 구역으로, 원도심 보존과 재생의 흐름을 보기 좋습니다.' },
-  { distance: '도보 연계권', name: '답동성당 일대', text: '인천 원도심의 종교·건축사와 생활권 변화를 함께 읽을 수 있는 역사 경관 구역입니다.' },
+  { distance: '개항장 권역', name: '인천아트플랫폼 일대', text: '별도 방문 후보입니다. 현재 시설·전시·입장·휴관 정보를 운영기관에서 확인하세요.' },
+  { distance: '별도 경로 확인', name: '답동성당 일대', text: '종교시설 주변을 고려하는 경우 방문 허용 구역·예식 일정·관람 규칙을 운영기관에 확인하세요.' },
 ];
 const courses = [
   { icon: '🥢', name: '먹거리 중심 코스', text: '신포국제시장 → 개항장 거리 → 차이나타운. 시장에서 간단히 먹고 개항장의 거리 풍경을 지나 이주사 공간으로 이어지는 흐름입니다.' },
   { icon: '🏛️', name: '역사 산책 코스', text: '신포국제시장 → 홍예문 → 답동 일대. 시장의 생활문화와 개항기 도시 확장의 흔적을 같은 날 비교해 볼 수 있습니다.' },
-  { icon: '🌊', name: '조망·휴식 코스', text: '신포국제시장 → 자유공원 → 인천아트플랫폼 일대. 항구와 원도심을 높은 곳에서 내려다본 뒤 실내 문화공간에서 쉬어 가는 구성입니다.' },
+  { icon: '🌊', name: '조망·휴식 코스', text: '신포국제시장 → 자유공원 → 인천아트플랫폼 일대. 각 장소의 개방과 실내 이용 가능 여부를 별도로 확인한 뒤 구성하는 후보 일정입니다.' },
 ];
 ---
 <BaseLayout
   title={withSiteName('주변 명소·추천 동선')}
   description="신포국제시장 주변 명소와 추천 동선을 안내합니다. 개항장 거리, 자유공원, 홍예문, 차이나타운, 인천아트플랫폼, 답동성당 일대를 반나절 코스로 묶는 방법과 비 오는 날 대안을 정리했습니다."
 >
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumb(site, crumbs))}></script>
-  <script type="application/ld+json" set:html={JSON.stringify(faqPage(faqs))}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumb(site, crumbs))}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPage(faqs))}></script>
 
   <section class="legal-hero"><div class="shell">
     <nav class="breadcrumb" aria-label="경로"><a href="/">홈</a><em aria-hidden="true">›</em><span>주변 명소</span></nav>
     <span class="kicker">주변 연계</span>
     <h1>시장을 넘어<br/>개항장 한 바퀴</h1>
-    <p>신포국제시장은 개항장 역사공간과 걸어서 연결하기 좋은 위치입니다. 식사만 하고 돌아가기보다 도시가 항구를 통해 어떻게 변했는지 함께 살펴보면 방문의 맥락이 선명해집니다.</p>
+    <p>시장과 별도로 고려할 수 있는 주변 방문 후보입니다. 당일 이동 경로·개방·관람 조건을 확인한 뒤 일정을 정하세요. 이 페이지의 묶음은 방문 제안이지 검증된 통행·입장 코스가 아닙니다.</p>
   </div></section>
+<FactSnapshot />
+
 
   <section class="section"><div class="shell">
-    <div class="section-head"><div><span class="kicker">도보 연계 명소</span><h2>시장에서<br/>걸어갈 수 있는 곳</h2></div><p>아래 장소는 개항 이후 인천 원도심이 형성된 흐름을 읽는 데 도움이 되는 곳들입니다. 운영시간과 휴관일은 장소별로 다릅니다.</p></div>
+    <div class="section-head"><div><span class="kicker">도보 연계 명소</span><h2>시장 밖<br/>방문 후보</h2></div><p>아래 장소는 개항 이후 인천 원도심이 형성된 흐름을 읽는 데 도움이 되는 곳들입니다. 운영시간과 휴관일은 장소별로 다릅니다.</p></div>
     <div class="nearby-grid">
       {spots.map((spot) => (
         <article class="nearby-card"><span class="distance">{spot.distance}</span><h3>{spot.name}</h3><p>{spot.text}</p></article>
@@ -93,4 +96,5 @@ const courses = [
     <div class="section-head"><div><span class="kicker">자주 묻는 질문</span><h2>주변 연계<br/>질문 모음</h2></div><p>야외 공간과 문화시설의 운영 정보는 장소별로 다르므로 개별 확인이 필요합니다.</p></div>
     <div class="faq-grid">{faqs.map(([question, answer]) => <details><summary>{question}</summary><p>{answer}</p></details>)}</div>
   </div></section>
+<p class="shell rating-note">자료 확인: 2026년 10월 20일. <a href="https://itour.incheon.go.kr/ssst/ssst/detail.do?cotId=ITD21122715161333869">인천투어 시장 안내</a>는 일반 정보이며 점포·시설별 운영을 보장하지 않습니다.</p>
 </BaseLayout>

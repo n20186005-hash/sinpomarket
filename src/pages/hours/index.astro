@@ -1,4 +1,5 @@
 ---
+import FactSnapshot from '../../components/FactSnapshot.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { MARKET, withSiteName, type Faq } from '../../data/site';
 import { breadcrumb, faqPage } from '../../lib/schema';
@@ -12,14 +13,14 @@ const faqs: Faq[] = [
   ['신포국제시장 영업시간은 몇 시부터 몇 시까지인가요?', `공식 관광안내에는 일반 이용시간이 ${MARKET.openingHours}로 표시되어 있습니다. 다만 점포별로 문을 여는 시간과 닫는 시간이 다르므로 개별 방문 목적이 있다면 현장 안내를 확인하세요.`],
   ['정기 휴무일이 있나요?', '인천투어 안내에는 매월 첫째 월요일과 설·추석 당일 휴무가 표시되어 있습니다. 다만 점포별로 다를 수 있어 중요한 방문이라면 출발 전에 운영 여부를 확인하는 편이 안전합니다.'],
   ['명절 연휴에도 문을 여나요?', '명절 전후에는 운영 시간이 달라지거나 일부 점포가 쉬는 경우가 있습니다. 공식 안내 채널과 지도 서비스의 당일 영업정보를 함께 확인하세요.'],
-  ['언제 방문하면 덜 붐비나요?', '평일 낮 시간대가 비교적 한산합니다. 주말 저녁과 식사 시간대는 먹거리 골목 대기가 길어지므로 여유 있게 계획하세요.'],
+  ['언제 방문하면 덜 붐비나요?', '혼잡도는 점포와 방문일에 따라 달라집니다. 원하는 점포의 대기와 주문 마감 시간을 확인하고 이동 여유를 두세요.'],
   ['화장실과 수유실이 있나요?', '시장 건물 내부에 남녀 구분 화장실이 안내되어 있고, 지원센터 내 수유실 정보가 공식 자료에 표시되어 있습니다. 장애인 화장실 안내도 확인됩니다.'],
   ['현금만 받는 점포가 있나요?', '결제 수단은 점포마다 다를 수 있습니다. 소액 현금과 카드·모바일 결제를 함께 준비하면 결제 과정이 수월합니다.'],
 ];
 const slots = [
-  { icon: '🌅', name: '오전', text: '식재료와 생활품을 중심으로 움직이는 시간대입니다. 비교적 한산해 시장 구조를 천천히 살펴보기 좋습니다.' },
-  { icon: '☀️', name: '낮~이른 저녁', text: '대부분의 점포가 운영하는 시간대로, 먹거리와 장보기를 함께 하기 좋은 구간입니다.' },
-  { icon: '🌆', name: '저녁', text: '간판 불이 켜지고 먹거리 골목이 가장 활기를 띠는 시간입니다. 인기 메뉴의 대기가 길어질 수 있습니다.' },
+  { icon: '🌅', name: '오전', text: '방문할 점포의 개점 시간을 먼저 확인하세요. 일반 시간표가 모든 점포에 적용되지는 않습니다.' },
+  { icon: '☀️', name: '낮~이른 저녁', text: '식사·장보기 계획에 필요한 개별 점포의 영업과 주문 마감을 확인하세요.' },
+  { icon: '🌆', name: '저녁', text: '저녁 영업을 가정하지 말고 목적 점포와 귀가 교통편을 확인하세요.' },
   { icon: '🌙', name: '늦은 저녁', text: '점포별 영업 종료 시간이 달라 문을 닫는 곳이 늘어납니다. 늦은 방문은 사전 확인이 필요합니다.' },
 ];
 const facilities = [
@@ -35,8 +36,8 @@ const facilities = [
   title={withSiteName('영업시간·휴무 안내')}
   description={`신포국제시장 영업시간·휴무 안내입니다. 공식 관광안내 기준 일반 이용시간 ${MARKET.openingHours}, 매월 첫째 월요일·설·추석 당일 휴무, 점포별 차이, 혼잡 시간대와 화장실·수유실·무장애 편의시설을 정리했습니다.`}
 >
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumb(site, crumbs))}></script>
-  <script type="application/ld+json" set:html={JSON.stringify(faqPage(faqs))}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumb(site, crumbs))}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPage(faqs))}></script>
 
   <section class="legal-hero"><div class="shell">
     <nav class="breadcrumb" aria-label="경로"><a href="/">홈</a><em aria-hidden="true">›</em><span>영업시간</span></nav>
@@ -44,14 +45,16 @@ const facilities = [
     <h1>신포국제시장<br/>영업시간과 휴무</h1>
     <p>시장 전체를 하나의 영업시간으로 단정하지 않습니다. 공식 관광안내의 일반 안내 시간과 점포별 차이, 명절 변동 가능성을 함께 확인하세요.</p>
   </div></section>
+<FactSnapshot />
+
 
   <section class="section"><div class="shell">
     <div class="visit-grid">
       <article class="info-card accent"><h3>일반 안내 이용시간</h3><p><strong>{MARKET.openingHours}</strong><br/>공식 관광안내에 표시된 값이며 점포별로 다를 수 있습니다.</p></article>
       <article class="info-card"><h3>휴무 안내</h3><p>매월 첫째 월요일, 설·추석 당일 휴무가 공식 안내에 표시되어 있습니다. 개별 점포는 다를 수 있습니다.</p></article>
-      <article class="info-card"><h3>입장료</h3><p>시장 입장료는 없습니다. 음식·상품 구매와 주차는 개별 결제입니다.</p></article>
+      <article class="info-card"><h3>입장료</h3><p>현재 입장 관련 비용은 확인하지 않았습니다. 음식·상품·주차 등 필요한 항목의 금액을 각각 확인하세요.</p></article>
       <article class="info-card"><h3>권장 체류 시간</h3><p>시장만 보면 1.5~2.5시간, 개항장 주변까지 함께 보면 반나절 정도를 잡는 방식이 무난합니다.</p></article>
-      <article class="info-card"><h3>혼잡도</h3><p>주말 저녁과 식사 시간대가 가장 붐빕니다. 평일 낮이 비교적 여유롭습니다.</p></article>
+      <article class="info-card"><h3>혼잡도</h3><p>혼잡도는 방문일과 점포마다 다릅니다. 당일 대기와 이동 시간을 확인하세요.</p></article>
       <article class="info-card"><h3>확인 방법</h3><p>중요한 방문이라면 당일 공식 안내 채널과 지도 서비스의 영업정보를 함께 확인하세요.</p></article>
     </div>
     <div class="neutral-note"><strong>왜 시간을 단정하지 않나요?</strong> · 전통시장은 상인별로 개점·폐점 시간이 다르고, 행사·공사·명절에 따라 운영이 바뀝니다. 서로 다른 공식 페이지의 값이 다를 때는 변동성을 그대로 표시하는 편이 정확합니다.</div>
@@ -101,4 +104,5 @@ const facilities = [
     <div class="section-head"><div><span class="kicker">자주 묻는 질문</span><h2>영업시간 관련<br/>질문 모음</h2></div><p>아래 답변은 공개 관광자료의 일반 안내를 바탕으로 하며, 실제 운영은 점포와 시점에 따라 달라질 수 있습니다.</p></div>
     <div class="faq-grid">{faqs.map(([question, answer]) => <details><summary>{question}</summary><p>{answer}</p></details>)}</div>
   </div></section>
+<p class="shell rating-note">자료 확인: 2026년 10월 20일. <a href="https://itour.incheon.go.kr/ssst/ssst/detail.do?cotId=ITD21122715161333869">인천투어 시장 안내</a>는 일반 정보이며 점포·시설별 운영을 보장하지 않습니다.</p>
 </BaseLayout>

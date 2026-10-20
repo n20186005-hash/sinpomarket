@@ -1,4 +1,5 @@
 ---
+import FactSnapshot from '../../components/FactSnapshot.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { MARKET, withSiteName, type Faq } from '../../data/site';
 import { breadcrumb, faqPage } from '../../lib/schema';
@@ -9,27 +10,27 @@ const crumbs = [
   { name: '위치·교통', path: '/location/' },
 ];
 const faqs: Faq[] = [
-  ['신포국제시장은 어느 역에서 가까운가요?', '수인분당선 신포역이 가장 가깝습니다. 한국관광공사 시장 안내 기준으로 4번 출구에서 도보 약 3분으로 소개됩니다. 출구 공사나 보행 동선 변경이 있을 수 있어 당일 지도를 함께 확인하세요.'],
+  ['신포국제시장은 어느 역에서 가까운가요?', '수인분당선 신포역이 가장 가깝습니다. 한국관광공사 2023년 안내는 4번 출구에서 도보 약 3분으로 소개합니다. 출구 공사나 보행 동선 변경이 있을 수 있어 당일 지도를 함께 확인하세요.'],
   ['수도권 1호선 인천역에서도 걸어갈 수 있나요?', '걸어서 접근할 수 있는 거리로 안내됩니다. 다만 원도심 일부 구간에 경사가 있어 짐이 많거나 더위·비가 있는 날에는 버스나 택시를 함께 고려하는 편이 편합니다.'],
-  ['인천국제공항에서 바로 오려면 어떻게 하나요?', '공항철도로 계양역에서 인천1호선, 원인재역에서 수인분당선으로 갈아타 신포역에서 하차하는 철도 중심 경로가 일반적입니다. 짐이 많으면 택시와 소요 시간·비용을 비교하세요.'],
+  ['인천국제공항에서 바로 오려면 어떻게 하나요?', '공항 터미널에서 시장 주소까지 당일 경로를 조회하세요. 이 가이드는 현재 환승 경로·운행·막차를 확인하지 않았으므로 철도 운영사와 교통 안내에서 다시 확인하세요.'],
   ['버스 노선 번호를 알려주지 않는 이유가 있나요?', '시내버스는 노선 개편과 정류장 변경이 잦습니다. 특정 번호를 고정해 안내하면 실제 운행 정보와 어긋날 수 있어, 신포시장·신포동·동인천권 정류장을 검색해 당일 운행 노선을 확인하는 방식을 권합니다.'],
   ['주차는 어디에 하나요?', '시장 인근 유료 공영주차장을 이용할 수 있으며 장애인 전용 주차면도 안내되어 있습니다. 주말과 식사 시간대에는 만차 가능성이 높아 대중교통과 비교해 계획하세요.'],
   ['휠체어나 유모차로 접근할 수 있나요?', '주출입구 경사로와 휠체어 통과 가능한 출입구가 안내되어 있습니다. 다만 아케이드 내부는 시간대별 혼잡도가 크고 바닥 상태가 구간마다 다를 수 있어 한산한 시간대를 권합니다.'],
 ];
 const routes = [
-  { icon: '🚇', name: '지하철', text: '수인분당선 신포역 4번 출구에서 도보 약 3분(공식 관광안내 기준). 수도권 1호선 인천역에서도 도보 접근이 가능합니다.' },
-  { icon: '✈️', name: '인천국제공항', text: '공항철도 → 계양역에서 인천1호선 → 원인재역에서 수인분당선으로 환승해 신포역에서 하차하는 철도 중심 경로가 있습니다.' },
+  { icon: '🚇', name: '지하철', text: '수인분당선 신포역 4번 출구에서 약 3분(한국관광공사 2023년 자료; 현재 동선 별도 확인). 수도권 1호선 인천역에서도 도보 접근이 가능합니다.' },
+  { icon: '✈️', name: '인천국제공항', text: '공항에서 시장까지의 당일 노선·환승·막차를 교통 운영사와 경로 검색에서 확인하세요.' },
   { icon: '🚌', name: '시내·공항버스', text: '신포시장·신포동·동인천권 정류장을 목적지로 검색해 현재 운행 중인 노선을 확인하세요. 노선 번호는 개편 가능성이 커 고정해 적지 않습니다.' },
-  { icon: '🚕', name: '택시', text: '기사에게 “신포국제시장, 우현로49번길 11-5”를 제시하면 목적지 확인이 쉽습니다. 시장 안쪽은 보행 중심이므로 입구 부근에서 하차하세요.' },
+  { icon: '🚕', name: '택시', text: '기사에게 “신포국제시장, 우현로49번길 11-5”를 제시하면 목적지 확인이 쉽습니다. 허용된 승하차 지점은 기사와 현장 안내에 확인하세요.' },
   { icon: '🚗', name: '자가용', text: '원도심 도로가 좁고 주말 혼잡이 큽니다. 인근 유료 공영주차장 위치를 미리 확인하고, 만차 시 대중교통 전환을 염두에 두세요.' },
 ];
 ---
 <BaseLayout
   title={withSiteName('위치·가는 법 · 지하철·주차')}
-  description="신포국제시장 위치(인천광역시 제물포구 우현로49번길 11-5)와 가는 법을 안내합니다. 수인분당선 신포역 도보 약 3분, 인천역 도보 접근, 인천공항 철도 환승 경로, 버스·택시·주차 정보까지 정리했습니다."
+  description="신포국제시장 위치(인천광역시 제물포구 우현로49번길 11-5)와 가는 법을 안내합니다. 수인분당선 신포역 도보 약 3분, 인천역 도보 접근, 인천공항 출발 경로 확인 경로, 버스·택시·주차 정보까지 정리했습니다."
 >
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumb(site, crumbs))}></script>
-  <script type="application/ld+json" set:html={JSON.stringify(faqPage(faqs))}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumb(site, crumbs))}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqPage(faqs))}></script>
 
   <section class="legal-hero"><div class="shell">
     <nav class="breadcrumb" aria-label="경로"><a href="/">홈</a><em aria-hidden="true">›</em><span>위치·교통</span></nav>
@@ -37,13 +38,15 @@ const routes = [
     <h1>신포국제시장 위치와<br/>가는 방법</h1>
     <p>지하철·공항 철도·버스·택시·자가용 경로를 계획용으로 정리했습니다. 노선 개편과 공사로 번호·시간표가 바뀔 수 있어 변동성이 큰 버스 번호는 고정해 적지 않았습니다.</p>
   </div></section>
+<FactSnapshot />
+
 
   <section class="section"><div class="shell">
     <div class="visit-grid">
       <article class="info-card accent"><h3>주소</h3><p><strong>{MARKET.fullAddress}</strong><br/>2026년 행정체제 개편을 반영해 자치구를 제물포구로 표기합니다.</p></article>
       <article class="info-card"><h3>좌표</h3><p>북위 {MARKET.latitude}°, 동경 {MARKET.longitude}°. 지도 앱에 좌표를 입력하면 아케이드 입구를 찾기 쉽습니다.</p></article>
       <article class="info-card"><h3>대표 전화</h3><p>{MARKET.telephone}<br/>시장 운영 관련 문의는 점포별로 다를 수 있으며 공식 안내 채널을 함께 확인하세요.</p></article>
-      <article class="info-card"><h3>가장 가까운 역</h3><p>수인분당선 신포역 4번 출구, 도보 약 3분(공식 관광안내 기준).</p></article>
+      <article class="info-card"><h3>가장 가까운 역</h3><p>수인분당선 신포역 4번 출구, 약 3분(한국관광공사 2023년 자료; 현재 동선 별도 확인).</p></article>
       <article class="info-card"><h3>시장 입장</h3><p>입장료는 없습니다. 음식·상품 구매와 주차는 개별 결제입니다.</p></article>
       <article class="info-card"><h3>주차</h3><p>인근 유료 공영주차장 이용. 장애인 전용 주차면이 안내되어 있습니다.</p></article>
     </div>
@@ -70,10 +73,10 @@ const routes = [
   </div></section>
 
   <section class="section"><div class="shell">
-    <div class="section-head"><div><span class="kicker">주차와 접근</span><h2>차량 방문 시<br/>알아둘 점</h2></div><p>시장 자체 전용 주차시설 규모는 제한적입니다. 인근 공영주차장을 이용하는 계획이 일반적입니다.</p></div>
+    <div class="section-head"><div><span class="kicker">주차와 접근</span><h2>차량 방문 시<br/>알아둘 점</h2></div><p>인천투어는 유료 주차를 안내합니다. 현재 주차 위치·운영·요금·빈자리는 따로 확인하세요.</p></div>
     <div class="visit-grid">
       <article class="info-card"><h3>공영주차장</h3><p>시장 인근 유료 공영주차장을 이용할 수 있습니다. 요금과 운영시간은 시설별로 다르므로 현장 표기를 확인하세요.</p></article>
-      <article class="info-card"><h3>혼잡 시간</h3><p>주말과 식사 시간대에는 만차 가능성이 큽니다. 일찍 도착하거나 대중교통과 조합하는 방식을 고려하세요.</p></article>
+      <article class="info-card"><h3>혼잡 시간</h3><p>빈자리는 실시간으로 확인하지 않았습니다. 주차장 운영·만차 안내와 대체 이동 방법을 확인하세요.</p></article>
       <article class="info-card"><h3>장애인 주차</h3><p>장애인 전용 주차면이 공식 무장애 관광자료에 안내되어 있습니다. 이용 기준은 현장 표기를 따릅니다.</p></article>
       <article class="info-card"><h3>전기차 충전</h3><p>시장 내부 전용 충전시설은 확인되지 않습니다. 인근 공공·민간 충전소를 지도 서비스에서 검색하세요.</p></article>
       <article class="info-card"><h3>무장애 동선</h3><p>주출입구 경사로와 휠체어 통과 가능한 출입구가 안내되어 있습니다. 아케이드 혼잡도는 시간대별로 차이가 큽니다.</p></article>
@@ -95,4 +98,5 @@ const routes = [
     <div class="section-head"><div><span class="kicker">자주 묻는 질문</span><h2>위치·교통<br/>질문 모음</h2></div><p>노선과 출입구는 공사·개편으로 바뀔 수 있습니다. 출발 당일 공식 교통정보와 지도를 함께 확인하세요.</p></div>
     <div class="faq-grid">{faqs.map(([question, answer]) => <details><summary>{question}</summary><p>{answer}</p></details>)}</div>
   </div></section>
+<p class="shell rating-note">자료 확인: 2026년 10월 20일. <a href="https://itour.incheon.go.kr/ssst/ssst/detail.do?cotId=ITD21122715161333869">인천투어 시장 안내</a>는 일반 정보이며 점포·시설별 운영을 보장하지 않습니다.</p>
 </BaseLayout>

@@ -28,7 +28,7 @@ const absoluteImage = site ? new URL(image, site).toString() : undefined;
     <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
     <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
-    <link rel="canonical" href={canonical} />
+    {!noindex && <link rel="canonical" href={canonical} />}
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ko_KR" />
     <meta property="og:site_name" content={SITE_NAME} />
@@ -41,23 +41,7 @@ const absoluteImage = site ? new URL(image, site).toString() : undefined;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <title>{title}</title>
-    <script is:inline>
-      (() => {
-        try {
-          const raw = localStorage.getItem('sinpo-cookie-preferences');
-          const prefs = raw ? JSON.parse(raw) : null;
-          if (!prefs?.analytics) return;
-          const script = document.createElement('script');
-          script.async = true;
-          script.src = 'https://www.googletagmanager.com/gtag/js?id=G-HXM22WWPKP';
-          document.head.appendChild(script);
-          window.dataLayer = window.dataLayer || [];
-          window.gtag = function(){window.dataLayer.push(arguments);};
-          window.gtag('js', new Date());
-          window.gtag('config', 'G-HXM22WWPKP', { anonymize_ip: true });
-        } catch (_) {}
-      })();
-    </script>
+    <script is:inline src="/consent.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">본문 바로가기</a>
