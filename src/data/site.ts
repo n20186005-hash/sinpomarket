@@ -19,20 +19,20 @@ export const MARKET = {
   addressLocality: '제물포구',
   addressRegion: '인천광역시',
   addressCountry: 'KR',
-  /** 화면 표기용 전체 주소 (2026년 행정체제 개편 반영) */
+  /** 인천투어에 표시된 주소; Maps 주소와 별도 출처 */
   fullAddress: '인천광역시 제물포구 우현로49번길 11-5',
-  latitude: 37.47135,
-  longitude: 126.62725,
-  /** 공식 관광안내 기준 일반 이용시간. 점포별로 다를 수 있음 */
+  latitude: 37.4713875,
+  longitude: 126.6272078,
+  /** 인천투어 일반 이용시간; Maps 목록과 다르며 점포별로 다름 */
   openingHours: '10:00–21:00',
   opens: '10:00',
   closes: '21:00',
   closingNote: '매월 첫째 월요일, 설·추석 당일 휴무가 공식 안내에 표시되어 있으나 점포별로 다를 수 있음',
-  isAccessibleForFree: true,
+
   /** 지도 서비스의 공개 표시값(변동 가능). 사이트 자체의 평가가 아님 */
-  ratingValue: '4.0',
+  ratingValue: '4.1',
   bestRating: '5',
-  reviewCount: '123',
+  reviewCount: '9878',
   images: ['/images/sinpo-night.webp', '/images/sinpo-arcade.webp', '/images/dakgangjeong.webp'],
   /** Google 지도 임베드(한국어·대한민국 설정) */
   mapEmbedUrl:

@@ -34,21 +34,7 @@ export function touristAttraction(site: URL | undefined): Record<string, unknown
       longitude: MARKET.longitude,
     },
     hasMap: `https://www.google.com/maps/search/?api=1&query=${MARKET.latitude},${MARKET.longitude}`,
-    isAccessibleForFree: MARKET.isAccessibleForFree,
-    openingHoursSpecification: [
-      {
-        '@type': 'OpeningHoursSpecification',
-        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-        opens: MARKET.opens,
-        closes: MARKET.closes,
-      },
-    ],
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: MARKET.ratingValue,
-      bestRating: MARKET.bestRating,
-      reviewCount: MARKET.reviewCount,
-    },
+
   };
 }
 
