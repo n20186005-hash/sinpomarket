@@ -25,3 +25,6 @@
 h1,h2,h3,p,a,dd{overflow-wrap:anywhere}
 @media(max-width:940px){.site-header nav{flex-wrap:wrap;overflow:visible;gap:0 18px}.header-cta{min-height:44px}}
 @media(max-width:640px){.photo-credit{position:relative;left:auto;bottom:auto;border-radius:0;margin:0;font-size:.75rem}.photo-grid figure{display:flex;flex-direction:column}.photo-grid img{min-height:0;flex:1;object-fit:cover}.photo-grid{grid-template-rows:400px 300px 300px}}
+
+/* Keep Korean hero words intact without changing long-URL wrapping elsewhere. */
+@media(max-width:640px){.hero h1{word-break:keep-all;overflow-wrap:normal;font-size:clamp(1.5rem,9vw,3.45rem);line-height:1.15}.hero h1 em{font-size:.75em}}
