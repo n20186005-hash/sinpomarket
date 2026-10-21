@@ -24,5 +24,15 @@ for(const failure of ['write','ignoreWrite','read']){p=page({local:store(new Map
 p=page();p.allow();p.local.fail.write=true;p.session.fail.write=true;p.deny();assert(p.c.name.includes(MARK));p.local.fail.write=false;assert.equal(p.reload().scripts.length,0);
 const late=store();late.fail.lateRead=true;p=page({local:late});p.allow();assert.equal(p.allowed(),false);assert.equal(p.checkbox.checked,false);assert.match(p.status.textContent,/비활성 상태/);assert.doesNotMatch(p.status.textContent,/허용했습니다/);
 const local=store(),a=page({local}),b=page({local});a.allow();b.event(local.getItem(KEY));assert.equal(b.allowed(),true);a.deny();b.event(local.getItem(KEY));assert.equal(b.runtime(),'denied');assert.equal(b.checkbox.checked,false);assert.match(b.status.textContent,/비활성화/);a.allow();b.event(local.getItem(KEY));assert.equal(b.allowed(),false);assert.match(b.status.textContent,/거부는 유지/);b.allow();assert.equal(b.runtime(),'granted');assert.equal(b.scripts.length,1);
+// The UI must reflect the applied state, rather than a second independent read.
+const initiallyGranted=store(new Map([[KEY,'{"analytics":true}']]));
+let initialReads=0;const initialGet=initiallyGranted.getItem.bind(initiallyGranted);
+initiallyGranted.getItem=k=>{if(k===KEY&&++initialReads>1)throw Error('read lost after initial apply');return initialGet(k)};
+p=page({local:initiallyGranted});assert.equal(p.allowed(),true);assert.equal(p.checkbox.checked,true);assert.equal(p.runtime(),'granted');assert.equal(initialReads,1);
+const betweenReads=store();p=page({local:betweenReads});let saveReads=0;const saveGet=betweenReads.getItem.bind(betweenReads);
+betweenReads.getItem=k=>{if(k===KEY&&++saveReads>2)throw Error('read lost after saved apply');return saveGet(k)};
+p.allow();assert.equal(p.allowed(),true);assert.equal(p.checkbox.checked,true);assert.equal(p.runtime(),'granted');assert.match(p.status.textContent,/허용했습니다/);assert.equal(saveReads,2);
+p.save();assert.equal(p.allowed(),false);assert.equal(p.checkbox.checked,false);assert.equal(p.runtime(),'denied');assert.doesNotMatch(p.status.textContent,/허용했습니다/);
+console.log('PASS applied runtime/checkbox/feedback align when reads become unavailable after initial or saved application; next Save read failure denies immediately.');
 for(const raw of ['broken','null','{"analytics":"true"}'])assert.equal(page({local:store(new Map([[KEY,raw]]))}).scripts.length,0);
 console.log('PASS Korean actual deferred runtime and registered checkbox/buttons: default denial, repeated Save single config/library, deny/regrant, loaded old grant local/dual persistence failure, retained document and fresh session/name veto, independent local/session reads, read-fail/write-ok no shared grant/effective UI, failed or ignored veto clear, late-read feedback, separate-tab cross-storage runtime/checkbox/status, malformed values.');

@@ -52,7 +52,7 @@
   window.sinpoConsent={read,save};
   apply(read()?.analytics===true);
   const checkbox=document.getElementById('analytics'),status=document.getElementById('cookie-status');
-  function sync(){const allowed=read()?.analytics===true;if(checkbox)checkbox.checked=allowed;return allowed;}
+  function sync(){const allowed=window['ga-disable-'+ID]===false;if(checkbox)checkbox.checked=allowed;return allowed;}
   sync();
   function choose(value){
     const stored=save(value),allowed=sync();
